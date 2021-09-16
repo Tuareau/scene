@@ -12,6 +12,7 @@ namespace tua {
 	public:
 		Parallelepiped() = default;
 		Parallelepiped(std::vector<Polygon> & polygons);
+		Parallelepiped(Point base, int height, int width, int depth);
 		~Parallelepiped() = default;
 
 		virtual void draw(Matrix * z_buffer) const override;

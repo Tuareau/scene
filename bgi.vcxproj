@@ -70,6 +70,7 @@
     <ClCompile Include="engine\matrix.cpp" />
     <ClCompile Include="engine\parallelepiped.cpp" />
     <ClCompile Include="engine\point.cpp" />
+    <ClCompile Include="engine\polygon.cpp" />
     <ClCompile Include="engine\scene.cpp" />
     <ClCompile Include="file.cxx" />
     <ClCompile Include="misc.cxx" />

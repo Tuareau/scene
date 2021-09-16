@@ -68,4 +68,10 @@ namespace tua {
 		}
 	}
 
+	bool tua::Point::operator==(const Point & other) {
+		return (_x == other._x) && 
+			(_y == other._y) && 
+			(_z == other._z) && 
+			(_delta == other._delta);
+	}
 };

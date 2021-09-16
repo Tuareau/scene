@@ -1,3 +1,4 @@
+/* 
 #include <iostream>
 #include <cctype>
 #include "par.h"
@@ -141,3 +142,4 @@ void instruct()
 
 	cout << "Press ESC to quit\n";
 }
+*/

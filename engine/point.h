@@ -26,8 +26,9 @@ namespace tua {
 		Point & operator+(const Point & other);
 		Point & operator*(double multiplier);
 		double & operator[](size_t idx);
-
 		double operator[](size_t idx) const;
+
+		bool operator==(const Point & other);
 
 		friend Point operator*(double multiplier, const Point & other);
 	};
