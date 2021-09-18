@@ -12,10 +12,9 @@ namespace tua {
 	{
 	private:
 		std::vector<Point> _points;
-
-		const Point & operator[](size_t idx) const;
-		Point & operator[](size_t idx);
+		
 		Point average_point() const;
+		Point & operator[](size_t idx);
 
 	public:
 		Matrix() = default;
@@ -32,6 +31,9 @@ namespace tua {
 		void scale(double coef);
 
 		void multiply(const Matrix & other);
+		
+		const Point operator[](size_t idx) const;
+		size_t size() const;
 	};
 
 	Matrix * make_shear_transform(double dx, double dy, double dz);

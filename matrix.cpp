@@ -6,12 +6,16 @@ namespace tua {
 		_points = points;
 	}
 
-	const Point & Matrix::operator[](size_t idx) const {
+	const Point Matrix::operator[](size_t idx) const {
 		return _points.at(idx);
 	}
 
 	Point & Matrix::operator[](size_t idx) {
 		return _points.at(idx);
+	}
+
+	size_t tua::Matrix::size() const {
+		return _points.size();
 	}
 
 	Matrix Matrix::operator*(const Matrix & other) {
