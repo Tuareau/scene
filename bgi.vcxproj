@@ -70,7 +70,6 @@
     <ClCompile Include="drawing.cxx" />
     <ClCompile Include="figure.cpp" />
     <ClCompile Include="file.cxx" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="main.cxx" />
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="misc.cxx" />
@@ -79,6 +78,7 @@
     <ClCompile Include="parallelepiped.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="text.cxx" />
     <ClCompile Include="winbgi.cxx" />
     <ClCompile Include="winthread.cxx" />
@@ -92,6 +92,7 @@
     <ClInclude Include="parallelepiped.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="polygon.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="sides.h" />
     <ClInclude Include="winbgi.h" />
     <ClInclude Include="winbgim.h" />

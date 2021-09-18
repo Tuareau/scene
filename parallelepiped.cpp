@@ -19,7 +19,7 @@ namespace tua {
 		std::vector<Point> pts1 = { pt0, pt4, pt7, pt3 };
 		std::vector<Point> pts2 = { pt0, pt1, pt5, pt4 };
 		std::vector<Point> pts3 = { pt6, pt7, pt3, pt2 };
-		std::vector<Point> pts4 = { pt6, pt5, pt1, pt7 };
+		std::vector<Point> pts4 = { pt6, pt5, pt1, pt2 };
 		std::vector<Point> pts5 = { pt6, pt5, pt4, pt7 };
 
 		Polygon pol0(pts0);
@@ -37,18 +37,18 @@ namespace tua {
 	}
 
 	void Parallelepiped::displace(Sides side, double step) {
-		for (auto pol : _polygons)
+		for (auto & pol : _polygons)
 			pol.displace(side, step);
 	}
 
 	void Parallelepiped::scale(double coef) {
-		for (auto pol : _polygons)
-			pol.scale(coef);
+		for (auto & pol : _polygons)
+			pol.scale(coef, Figure::average_point());
 	}
 
 	void Parallelepiped::spin(Axes axis, double angle) {
-		for (auto pol : _polygons)
-			pol.spin(axis, angle);
+		for (auto & pol : _polygons)
+			pol.spin(axis, angle, Figure::average_point());
 	}
 
 	void Parallelepiped::draw() const {

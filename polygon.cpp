@@ -15,6 +15,16 @@ namespace tua {
 		_polygon_matrix = new Matrix(*other._polygon_matrix);
 	}
 
+	Polygon::Polygon(Polygon && other) {
+		_is_visible = other._is_visible;
+		_polygon_matrix = other._polygon_matrix;
+		other._polygon_matrix = nullptr;
+	}
+
+	const std::vector<Point>& Polygon::points() const {
+		return _polygon_matrix->points();
+	}
+
 	void Polygon::draw() const {
 		using std::round;
 		if (!_is_visible || _polygon_matrix->size() < 1) 
@@ -44,46 +54,43 @@ namespace tua {
 		}			
 	}
 
-	template<typename... Points>
-	Polygon make_polygon(Points... point) {
-		std::vector<Point> points;
-		points.push_back(point)...;
-		return Polygon(points);
-	}
-
 	Polygon::~Polygon() {
 		delete _polygon_matrix;
 	}
 
-	void Polygon::displace(Sides side, double step) {
+	void Polygon::displace(Sides side, double step, const Point & base) {
 		switch (side) {
 			case Sides::LEFT:
-				_polygon_matrix->shear(-step, 0, 0);
+				_polygon_matrix->shear(-step, 0, 0, base);
 			case Sides::UP:
-				_polygon_matrix->shear(0, -step, 0);
+				_polygon_matrix->shear(0, -step, 0, base);
 			case Sides::RIGHT:
-				_polygon_matrix->shear(step, 0, 0);
+				_polygon_matrix->shear(step, 0, 0, base);
 			case Sides::DOWN:
-				_polygon_matrix->shear(0, step, 0);
+				_polygon_matrix->shear(0, step, 0, base);
 			case Sides::FURTHER:
-				_polygon_matrix->shear(0, 0, -step);
+				_polygon_matrix->shear(0, 0, -step, base);
 			case Sides::CLOSER:
-				_polygon_matrix->shear(0, 0, step);
+				_polygon_matrix->shear(0, 0, step, base);
 		}
 	}
 
-	void Polygon::scale(double coef) {
-		_polygon_matrix->scale(coef);
+	void Polygon::scale(double coef, const Point & base) {
+		_polygon_matrix->scale(coef, base);
 	}
 
-	void Polygon::spin(Axes axis, double angle) {
+	void Polygon::spin(Axes axis, double angle, const Point & base) {
 		switch (axis) {
 			case Axes::X:
-				_polygon_matrix->rotate(angle, Axes::X);
+				_polygon_matrix->rotate(angle, Axes::X, base);
 			case Axes::Y:
-				_polygon_matrix->rotate(angle, Axes::Y);
+				_polygon_matrix->rotate(angle, Axes::Y, base);
 			case Axes::Z:
-				_polygon_matrix->rotate(angle, Axes::Z);
+				_polygon_matrix->rotate(angle, Axes::Z, base);
 		}
+	}
+
+	Point Polygon::average_point() const {
+		return _polygon_matrix->average_point();
 	}
 }
