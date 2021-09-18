@@ -1,11 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <iterator>
 #include <cmath>
 
-#include "point.h"
-
+#include "axes.h"
+#include "sides.h"
+#include "matrix.h"
 #include "graphics.h"
 
 namespace tua {
@@ -13,20 +13,21 @@ namespace tua {
 	class Polygon
 	{
 	private:
-		std::vector<Point *> _points;
+		Matrix * _polygon_matrix;
 		bool _is_visible;
 
 	public:
 		Polygon();
-		Polygon(std::vector<Point *> & points);
+		Polygon(std::vector<Point> & points);
 		Polygon(const Polygon & other);
 		~Polygon();
 
 		// double depth() const;
 		void draw() const;
 
-		size_t size() const;
-		Point * operator[](size_t idx);
+		void displace(Sides side, double step);
+		void scale(double coef);
+		void spin(Axes axis, double angle);
 	};
 
 	template<typename... Points>
