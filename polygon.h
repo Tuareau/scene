@@ -2,10 +2,11 @@
 
 #include <vector>
 #include <iterator>
+#include <cmath>
 
 #include "point.h"
 
-#include "../graphics.h"
+#include "graphics.h"
 
 namespace tua {
 

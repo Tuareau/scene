@@ -17,7 +17,6 @@ namespace tua {
 		Matrix * _figure_matrix;
 
 		void fill_matrix();
-		void sync_polygons();
 
 	public:
 		Figure() = default;
@@ -33,21 +32,5 @@ namespace tua {
 		virtual void spin(Axes axis, double angle) = 0;
 	};
 
-	void Figure::fill_matrix()
-	{
-		std::set<Point *> figure_points;
-		for (auto & polygon : _polygons) {
-			for (size_t i = 0; i < polygon.size(); ++i)
-				figure_points.insert(polygon[i]);
-		}
-		std::vector<Point> points;
-		for (const auto & pt : figure_points)
-			points.push_back(*pt);
-		_figure_matrix = new Matrix(points);
-	}
-
-	inline Figure::~Figure() {
-		delete _figure_matrix;
-	}
 }
 

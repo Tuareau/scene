@@ -2,9 +2,9 @@
 
 namespace tua {
 
-	Parallelepiped::Parallelepiped(std::vector<Polygon>& polygons) 
+	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons) 
 		: Figure(polygons) {
-		fill_matrix();
+		this->fill_matrix();
 	}
 
 	Parallelepiped::Parallelepiped(Point base, int height, int width, int depth) {
@@ -41,15 +41,35 @@ namespace tua {
 	}
 
 	void Parallelepiped::displace(Sides side, double step) {
-
+		switch (side) {
+			case Sides::LEFT:
+				_figure_matrix->shear(-step, 0, 0);
+			case Sides::UP:
+				_figure_matrix->shear(0, -step, 0);
+			case Sides::RIGHT:
+				_figure_matrix->shear(step, 0, 0);
+			case Sides::DOWN:
+				_figure_matrix->shear(0, step, 0);
+			case Sides::FURTHER:
+				_figure_matrix->shear(0, 0, -step);
+			case Sides::CLOSER:
+				_figure_matrix->shear(0, 0, step);
+		}
 	}
 
 	void Parallelepiped::scale(double coef) {
-
+		_figure_matrix->scale(coef);
 	}
 
 	void Parallelepiped::spin(Axes axis, double angle) {
-
+		switch (axis) {
+			case Axes::X:
+				_figure_matrix->rotate(angle, Axes::X);
+			case Axes::Y:
+				_figure_matrix->rotate(angle, Axes::Y);
+			case Axes::Z:
+				_figure_matrix->rotate(angle, Axes::Z);
+		}
 	}
 
 	void Parallelepiped::draw(Matrix * z_buffer) const {
@@ -61,9 +81,4 @@ namespace tua {
 
 	}
 
-	/*
-	void shear(double dx, double dy, double dz);
-	void rotate(double angle, Axes axis);
-	void scale(double coef);
-	*/
 }

@@ -5,7 +5,7 @@ namespace tua {
 	Polygon::Polygon()
 		: _is_visible(false)	{}
 
-	Polygon::Polygon(std::vector<Point*>& points) 
+	Polygon::Polygon(std::vector<Point *> & points) 
 		: _points(points), _is_visible(true) {}
 
 	Polygon::Polygon(const Polygon & other) {
@@ -17,23 +17,31 @@ namespace tua {
 	}
 
 	Polygon::~Polygon() {
-		for (auto ptr : _points)
-			delete ptr;
+		for (auto ptr : _points) delete ptr;
 	}
 
 	void Polygon::draw() const {
+		using std::round;
 		if (!_is_visible) return;
 
 		auto curr = _points.begin();
 		auto next = std::next(_points.begin());
 		const auto penultimate = std::prev(_points.end());
 
+		int x0 = round((*curr)->x());
+		int y0 = round((*curr)->y());
+		int x1 = round((*penultimate)->x());
+		int y1 = round((*penultimate)->y());
+
 		setcolor(WHITE);
-		line((*curr)->x(), (*curr)->y(),
-			(*penultimate)->x(), (*penultimate)->y());
+		line(x0, y0, x1, y1);
 
 		while (next != _points.end()) {
-			line((*curr)->x(), (*curr)->y(), (*next)->x(), (*next)->y());
+			x0 = round((*curr)->x());
+			y0 = round((*curr)->y());
+			x1 = round((*next)->x());
+			y1 = round((*next)->y());
+			line(x0, y0, x1, y1);
 			++curr; ++next;
 		}			
 	}

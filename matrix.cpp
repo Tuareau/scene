@@ -2,8 +2,12 @@
 
 namespace tua {
 
-	Matrix::Matrix(const std::vector<Point>& points) {
+	Matrix::Matrix(const std::vector<Point> & points) {
 		_points = points;
+	}
+
+	const Point & Matrix::operator[](size_t idx) const {
+		return _points.at(idx);
 	}
 
 	Point & Matrix::operator[](size_t idx) {
@@ -11,21 +15,8 @@ namespace tua {
 	}
 
 	Matrix Matrix::operator*(const Matrix & other) {
-		if (other._points.size() > POINT_SIZE)
-			throw std::invalid_argument("Matrix::operator*() - wrong matrix dimension, must be 4x4");
-
-		Matrix result;
-		for (size_t i = 0; i < _points.size(); ++i)
-			result._points.emplace_back(0.0, 0.0, 0.0);
-
-		for (size_t i = 0; i < _points.size(); ++i) {
-			for (size_t j = 0; j < POINT_SIZE; ++j) {
-				for (size_t k = 0; k < POINT_SIZE; ++k) {
-					result[i][j] = _points[i][k] * other._points[k][j];
-				}
-			}
-		}
-		return result;
+		this->multiply(other);
+		return *this;
 	}
 
 	void Matrix::operator*=(const Matrix & other) {
@@ -37,14 +28,12 @@ namespace tua {
 		if (other._points.size() > POINT_SIZE)
 			throw std::invalid_argument("Matrix::operator*() - wrong matrix dimension, must be 4x4");
 		Matrix result;
-		for (size_t i = 0; i < _points.size(); ++i) {
-			result._points.emplace_back(0.0, 0.0, 0.0);
-		}
+		for (size_t i = 0; i < _points.size(); ++i)
+			result._points.emplace_back(0, 0, 0);
 		for (size_t i = 0; i < _points.size(); ++i) {
 			for (size_t j = 0; j < POINT_SIZE; ++j) {
-				for (size_t k = 0; k < POINT_SIZE; ++k) {
+				for (size_t k = 0; k < POINT_SIZE; ++k)
 					result[i][j] = _points[i][k] * other._points[k][j];
-				}
 			}
 		}
 		_points = result._points;
@@ -52,9 +41,9 @@ namespace tua {
 
 	Matrix & Matrix::operator=(const Matrix & other)
 	{
-		if (this == &other)
-			return *this;
-		_points = other._points;
+		if (this != &other)
+			_points = other._points;
+		return *this;
 	}
 
 	Matrix * make_shear_transform(double dx, double dy, double dz)
@@ -177,4 +166,5 @@ namespace tua {
 		auto matrix_ptr = new Matrix(coordinates_points);
 		return matrix_ptr;
 	}
+
 }

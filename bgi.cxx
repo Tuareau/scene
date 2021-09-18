@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int main_scene();
+
 int main(int argc, char* argv[])
 {
     string command = "g++ ";
@@ -17,5 +19,6 @@ int main(int argc, char* argv[])
     command += " -mwindows";
 #endif
     command += " -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32";
+	main_scene();
     return system(command.c_str( ));
 }

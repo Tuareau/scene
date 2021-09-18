@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "sides.h"
 #include "figure.h"
 #include "polygon.h"
 
@@ -21,6 +22,11 @@ namespace tua {
 		virtual void displace(Sides side, double step) override;
 		virtual void scale(double coef) override;
 		virtual void spin(Axes axis, double angle) override;
+
+		void draw() const {
+			for (const auto & polygon : _polygons)
+				polygon.draw();
+		}
 	};
 
 }
