@@ -14,29 +14,6 @@ namespace tua {
 	double Point::z() const { return _z; }
 	double Point::delta() const { return _delta; }
 
-	Point & Point::operator+(const Point & other) {
-		_x + other._x;
-		_y + other._y;
-		_z + other._z;
-		_delta + other._delta;
-		return *this;
-	}
-
-	Point & Point::operator*(double multiplier) {
-		_x * multiplier;
-		_y * multiplier;
-		_z * multiplier;
-		_delta * multiplier;
-		return *this;
-	}
-
-	Point operator*(double multiplier, const Point & other) {
-		return Point(other._x * multiplier,
-			other._y * multiplier,
-			other._z * multiplier,
-			other._delta * multiplier);
-	}
-
 	double & Point::operator[](size_t idx) {
 		switch (idx) {
 		case 0:
@@ -68,10 +45,14 @@ namespace tua {
 		}
 	}
 
-	bool tua::Point::operator==(const Point & other) {
-		return (_x == other._x) && 
-			(_y == other._y) && 
-			(_z == other._z) && 
-			(_delta == other._delta);
+	bool Point::operator==(const Point & other) {
+		return (_x == other._x) &&
+			(_y == other._y) &&
+			(_z == other._z);
+			// && (_delta == other._delta);
+	}
+
+	bool Point::operator!=(const Point & other) {
+		return !(*this == other);
 	}
 };

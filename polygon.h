@@ -20,16 +20,24 @@ namespace tua {
 		Polygon();
 		Polygon(std::vector<Point> & points);
 		Polygon(const Polygon & other);
+		Polygon(Polygon && other);
 		~Polygon();
 
 		// double depth() const;
 		void draw() const;
 
-		void displace(Sides side, double step);
-		void scale(double coef);
-		void spin(Axes axis, double angle);
+		void displace(Sides side, double step, const Point & base = Point(0, 0, 0));
+		void scale(double coef, const Point & base = Point(0, 0, 0));
+		void spin(Axes axis, double angle, const Point & base = Point(0, 0, 0));
+
+		Point average_point() const;
+		const std::vector<Point> & points() const;
 	};
 
 	template<typename... Points>
-	Polygon make_polygon(Points... point);
+	Polygon make_polygon(Points... point) {
+		std::vector<Point> points;
+		points.push_back(point)...;
+		return Polygon(points);
+	}
 }

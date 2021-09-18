@@ -13,7 +13,6 @@ namespace tua {
 	private:
 		std::vector<Point> _points;
 		
-		Point average_point() const;
 		Point & operator[](size_t idx);
 
 	public:
@@ -22,18 +21,18 @@ namespace tua {
 		Matrix(const Matrix & other) = default;
 		~Matrix() = default;
 
-		Matrix operator*(const Matrix & other);
-		void operator*=(const Matrix & other);
 		Matrix & operator=(const Matrix & other);
 
-		void shear(double dx, double dy, double dz);
-		void rotate(double angle, Axes axis);
-		void scale(double coef);
+		void shear(double dx, double dy, double dz, const Point & base = Point(0, 0, 0));
+		void rotate(double angle, Axes axis, const Point & base = Point(0, 0, 0));
+		void scale(double coef, const Point & base = Point(0, 0, 0));
 
 		void multiply(const Matrix & other);
 		
 		const Point operator[](size_t idx) const;
 		size_t size() const;
+		Point average_point() const;
+		const std::vector<Point> & points() const;
 	};
 
 	Matrix * make_shear_transform(double dx, double dy, double dz);

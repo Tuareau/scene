@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 namespace tua {
 
 	static const size_t POINT_SIZE = 4;
@@ -23,14 +25,11 @@ namespace tua {
 		double z() const;
 		double delta() const;
 
-		Point & operator+(const Point & other);
-		Point & operator*(double multiplier);
 		double & operator[](size_t idx);
 		double operator[](size_t idx) const;
 
 		bool operator==(const Point & other);
-
-		friend Point operator*(double multiplier, const Point & other);
+		bool operator!=(const Point & other);
 	};
 
 };

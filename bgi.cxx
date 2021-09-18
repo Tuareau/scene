@@ -1,24 +1,32 @@
+#include "scene.h"
+
+int main(int argc, char* argv[])
+{
+	tua::Scene scene;
+	scene.run();
+}
+
+/*
 #include <cstdlib>
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-int main_scene();
-
 int main(int argc, char* argv[])
 {
-    string command = "g++ ";
-    string blank = " ";
-    int i;
+	string command = "g++ ";
+	string blank = " ";
+	int i;
 
-    for (i = 1; i < argc; i++)
-	command += blank + argv[i];
+	for (i = 1; i < argc; i++)
+		command += blank + argv[i];
 
 #ifdef WINDOWS
-    command += " -mwindows";
+	command += " -mwindows";
 #endif
-    command += " -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32";
-	main_scene();
-    return system(command.c_str( ));
+	command += " -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32";
+
+	return system(command.c_str());
 }
+*/

@@ -14,21 +14,15 @@ namespace tua {
 		return _points.at(idx);
 	}
 
-	size_t tua::Matrix::size() const {
+	size_t Matrix::size() const {
 		return _points.size();
 	}
 
-	Matrix Matrix::operator*(const Matrix & other) {
-		this->multiply(other);
-		return *this;
+	const std::vector<Point> & tua::Matrix::points() const {
+		return _points;
 	}
 
-	void Matrix::operator*=(const Matrix & other) {
-		multiply(other);
-	}
-
-	void Matrix::multiply(const Matrix & other)
-	{
+	void Matrix::multiply(const Matrix & other) {
 		if (other._points.size() > POINT_SIZE)
 			throw std::invalid_argument("Matrix::operator*() - wrong matrix dimension, must be 4x4");
 		Matrix result;
@@ -37,38 +31,36 @@ namespace tua {
 		for (size_t i = 0; i < _points.size(); ++i) {
 			for (size_t j = 0; j < POINT_SIZE; ++j) {
 				for (size_t k = 0; k < POINT_SIZE; ++k)
-					result[i][j] = _points[i][k] * other._points[k][j];
+					result[i][j] += _points[i][k] * other._points[k][j];
 			}
 		}
 		_points = result._points;
 	}
 
-	Matrix & Matrix::operator=(const Matrix & other)
-	{
+	Matrix & Matrix::operator=(const Matrix & other) {
 		if (this != &other)
 			_points = other._points;
 		return *this;
 	}
 
-	Matrix * make_shear_transform(double dx, double dy, double dz)
-	{
+	Matrix * make_shear_transform(double dx, double dy, double dz) {
 		std::vector<Point> shear_points {
-			Point(1, 0, 0, dx),
-			Point(0, 1, 0, dy),
-			Point(0, 0, 1, dz),
-			Point(0, 0, 0, 1)
+			Point(1, 0, 0, 0),
+			Point(0, 1, 0, 0),
+			Point(0, 0, 1, 0),
+			Point(dx, dy, dz, 1)
 		};
 		auto matrix_ptr = new Matrix(shear_points);
 		return matrix_ptr;
 	}
 
-	void Matrix::shear(double dx, double dy, double dz) {
+	void Matrix::shear(double dx, double dy, double dz, const Point & base) {
 		Matrix * shear_transform = make_shear_transform(dx, dy, dz);
 		multiply(*shear_transform);
+		delete shear_transform;
 	}
 
-	Point Matrix::average_point() const
-	{
+	Point Matrix::average_point() const {
 		double aver_x = 0.0, aver_y = 0.0, aver_z = 0.0;
 		for (auto point : _points) {
 			aver_x += point.x();
@@ -81,8 +73,7 @@ namespace tua {
 		return Point(aver_x, aver_y, aver_z);
 	}
 
-	Matrix * make_scale_transform(const Point & base, double coef)
-	{
+	Matrix * make_scale_transform(const Point & base, double coef) {
 		std::vector<Point> scale_points {
 			Point(coef, 0, 0, base.x() * (1 - coef)),
 			Point(0, coef, 0, base.y() * (1 - coef)),
@@ -93,13 +84,13 @@ namespace tua {
 		return matrix_ptr;
 	}
 
-	void Matrix::scale(double coef) {
-		Matrix * scale_transform = make_scale_transform(average_point(), coef);
+	void Matrix::scale(double coef, const Point & base) {
+		Matrix * scale_transform = make_scale_transform(base, coef);
 		multiply(*scale_transform);
+		delete scale_transform;
 	}
 
-	Matrix * make_rotate_x_transform(const Point & base, double radian)
-	{
+	Matrix * make_rotate_x_transform(const Point & base, double radian) {
 		auto cos_value = std::cos(radian), sin_value = std::sin(radian);
 		std::vector<Point> rotate_points {
 			Point(1, 0, 0, 0),
@@ -111,8 +102,7 @@ namespace tua {
 		return matrix_ptr;
 	}
 
-	Matrix * make_rotate_y_transform(const Point & base, double radian)
-	{
+	Matrix * make_rotate_y_transform(const Point & base, double radian) {
 		auto cos_value = std::cos(radian), sin_value = std::sin(radian);
 		std::vector<Point> rotate_points {
 			Point(cos_value, 0, sin_value, base.x() * (1 - cos_value) - base.z() * sin_value),
@@ -124,8 +114,7 @@ namespace tua {
 		return matrix_ptr;
 	}
 
-	Matrix * make_rotate_z_transform(const Point & base, double radian)
-	{
+	Matrix * make_rotate_z_transform(const Point & base, double radian) {
 		auto cos_value = std::cos(radian), sin_value = std::sin(radian);
 		std::vector<Point> rotate_points {
 			Point(cos_value, -sin_value, 0, base.x() * (1 - cos_value) + base.y() * sin_value),
@@ -137,23 +126,22 @@ namespace tua {
 		return matrix_ptr;
 	}
 
-	void Matrix::rotate(double angle, Axes axis) {
+	void Matrix::rotate(double angle, Axes axis, const Point & base) {
 		double rad = 3.14 / 180 * angle;
 		Matrix * rotate_transform;
 		switch (axis) {
 			case Axes::X:
-				rotate_transform = make_rotate_x_transform(average_point(), rad);
-				multiply(*rotate_transform);
+				rotate_transform = make_rotate_x_transform(base, rad);
 				break;
 			case Axes::Y:
-				rotate_transform = make_rotate_y_transform(average_point(), rad);
-				multiply(*rotate_transform);
+				rotate_transform = make_rotate_y_transform(base, rad);
 				break;
 			case Axes::Z:
-				rotate_transform = make_rotate_z_transform(average_point(), rad);
-				multiply(*rotate_transform);
+				rotate_transform = make_rotate_z_transform(base, rad);
 				break;
 		}
+		multiply(*rotate_transform);
+		delete rotate_transform;
 	}
 
 	Matrix * tua::make_coordinates_y_transform(bool is_inverse, double angle) {

@@ -5,8 +5,8 @@
 
 #include "axes.h"
 #include "sides.h"
-#include "matrix.h"
 #include "polygon.h"
+#include "point.h"
 
 namespace tua {
 
@@ -14,6 +14,8 @@ namespace tua {
 	{
 	protected:
 		std::vector<Polygon> _polygons;
+
+		Point average_point() const;
 
 	public:
 		Figure() = default;
@@ -28,6 +30,8 @@ namespace tua {
 		virtual void scale(double coef) = 0;
 		virtual void spin(Axes axis, double angle) = 0;
 	};
+
+	Point average_point_from_set(const std::set<Point> & points);
 
 }
 
