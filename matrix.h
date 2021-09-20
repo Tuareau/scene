@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <exception>
+
 #include "point.h"
 #include "axes.h"
 
@@ -23,9 +24,9 @@ namespace tua {
 
 		Matrix & operator=(const Matrix & other);
 
-		void shear(double dx, double dy, double dz, const Point & base = Point(0, 0, 0));
-		void rotate(double angle, Axes axis, const Point & base = Point(0, 0, 0));
-		void scale(double coef, const Point & base = Point(0, 0, 0));
+		void shear(double dx, double dy, double dz);
+		void rotate(double angle, Axes axis, const Point & base);
+		void scale(double coef, const Point & base);
 
 		void multiply(const Matrix & other);
 		

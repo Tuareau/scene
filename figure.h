@@ -1,7 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <vector>
-#include <set>
+#include <cmath>
 
 #include "axes.h"
 #include "sides.h"
@@ -30,8 +31,5 @@ namespace tua {
 		virtual void scale(double coef) = 0;
 		virtual void spin(Axes axis, double angle) = 0;
 	};
-
-	Point average_point_from_set(const std::set<Point> & points);
-
 }
 

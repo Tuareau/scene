@@ -8,7 +8,7 @@ namespace tua {
 	{
 		Point base(100, 100, 100);
 
-		Parallelepiped par(base, 100, 300, 200);
+		Parallelepiped par(base, 100, 200, 100);
 
 		instruct();
 		initwindow(960, 540, "SCENE");
@@ -49,14 +49,14 @@ namespace tua {
 
 			if (GetKeyState('R') & 0x8000)
 			{
-				par.displace(tua::Sides::FURTHER, TUA_DIST);
+				par.displace(tua::Sides::CLOSER, TUA_DIST);
 				clearviewport();
 				par.draw();
 			}
 
 			if (GetKeyState('T') & 0x8000)
 			{
-				par.displace(tua::Sides::CLOSER, TUA_DIST);
+				par.displace(tua::Sides::FURTHER, TUA_DIST);
 				clearviewport();
 				par.draw();
 			}

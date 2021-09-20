@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 namespace tua {
 
 	static const size_t POINT_SIZE = 4;
@@ -15,7 +17,8 @@ namespace tua {
 	public:
 		Point();
 		Point(const Point & other) = default;
-		Point(double x, double y, double z, double delta = 1.0);
+		Point(double x, double y, double z);
+		Point(double x, double y, double z, double delta);
 		~Point() = default;
 
 		double x() const;

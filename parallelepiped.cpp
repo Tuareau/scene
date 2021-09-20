@@ -2,7 +2,7 @@
 
 namespace tua {
 
-	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons) 
+	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons)
 		: Figure(polygons) {}
 
 	Parallelepiped::Parallelepiped(Point base, int height, int width, int depth) {
@@ -22,18 +22,12 @@ namespace tua {
 		std::vector<Point> pts4 = { pt6, pt5, pt1, pt2 };
 		std::vector<Point> pts5 = { pt6, pt5, pt4, pt7 };
 
-		Polygon pol0(pts0);
-		Polygon pol1(pts1);
-		Polygon pol2(pts2);
-		Polygon pol3(pts3);
-		Polygon pol4(pts4);
-		Polygon pol5(pts5);
-
-		_polygons.push_back(pol0);
-		_polygons.push_back(pol1);
-		_polygons.push_back(pol2);
-		_polygons.push_back(pol3);
-		_polygons.push_back(pol4);
+		_polygons.emplace_back(pts0);
+		_polygons.emplace_back(pts1);
+		_polygons.emplace_back(pts2);
+		_polygons.emplace_back(pts3);
+		_polygons.emplace_back(pts4);
+		_polygons.emplace_back(pts5);
 	}
 
 	void Parallelepiped::displace(Sides side, double step) {
