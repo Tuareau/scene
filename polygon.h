@@ -18,7 +18,7 @@ namespace tua {
 
 	public:
 		Polygon();
-		Polygon(std::vector<Point> & points);
+		Polygon(const std::vector<Point> & points);
 		Polygon(const Polygon & other);
 		Polygon(Polygon && other);
 		~Polygon();
@@ -26,9 +26,9 @@ namespace tua {
 		// double depth() const;
 		void draw() const;
 
-		void displace(Sides side, double step, const Point & base = Point(0, 0, 0));
-		void scale(double coef, const Point & base = Point(0, 0, 0));
-		void spin(Axes axis, double angle, const Point & base = Point(0, 0, 0));
+		void displace(Sides side, double step);
+		void scale(double coef, const Point & base);
+		void spin(Axes axis, double angle, const Point & base);
 
 		Point average_point() const;
 		const std::vector<Point> & points() const;

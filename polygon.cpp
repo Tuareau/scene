@@ -3,9 +3,9 @@
 namespace tua {
 
 	Polygon::Polygon()
-		: _is_visible(false) {}
+		: _is_visible(false), _polygon_matrix(nullptr) {}
 
-	Polygon::Polygon(std::vector<Point> & points) 
+	Polygon::Polygon(const std::vector<Point> & points) 
 		: _is_visible(true) {
 		_polygon_matrix = new Matrix(points);
 	}
@@ -58,20 +58,26 @@ namespace tua {
 		delete _polygon_matrix;
 	}
 
-	void Polygon::displace(Sides side, double step, const Point & base) {
+	void Polygon::displace(Sides side, double step) {
 		switch (side) {
 			case Sides::LEFT:
-				_polygon_matrix->shear(-step, 0, 0, base);
-			case Sides::UP:
-				_polygon_matrix->shear(0, -step, 0, base);
+				_polygon_matrix->shear(-step, 0, 0);
+				break;
 			case Sides::RIGHT:
-				_polygon_matrix->shear(step, 0, 0, base);
+				_polygon_matrix->shear(step, 0, 0);
+				break;
+			case Sides::UP:
+				_polygon_matrix->shear(0, -step, 0);
+				break;
 			case Sides::DOWN:
-				_polygon_matrix->shear(0, step, 0, base);
+				_polygon_matrix->shear(0, step, 0);
+				break;
 			case Sides::FURTHER:
-				_polygon_matrix->shear(0, 0, -step, base);
+				_polygon_matrix->shear(0, 0, -step);
+				break;
 			case Sides::CLOSER:
-				_polygon_matrix->shear(0, 0, step, base);
+				_polygon_matrix->shear(0, 0, step);
+				break;
 		}
 	}
 
@@ -83,10 +89,13 @@ namespace tua {
 		switch (axis) {
 			case Axes::X:
 				_polygon_matrix->rotate(angle, Axes::X, base);
+				break;
 			case Axes::Y:
 				_polygon_matrix->rotate(angle, Axes::Y, base);
+				break;
 			case Axes::Z:
 				_polygon_matrix->rotate(angle, Axes::Z, base);
+				break;
 		}
 	}
 
