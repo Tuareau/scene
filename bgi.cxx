@@ -1,32 +1,42 @@
+#include "point.h"
+#include "parallelepiped.h"
 #include "scene.h"
 
 int main(int argc, char* argv[])
 {
-	tua::Scene scene;
+	using tua::Point;
+	using tua::Parallelepiped;
+	using tua::Scene;
+
+	Point base(100, 100, 100);
+	Parallelepiped * par = new Parallelepiped(base, 100, 200, 100);
+
+	Scene scene("SCENE");
+	scene.add_figure(par);
 	scene.run();
+
+	delete par;
 }
 
-/*
-#include <cstdlib>
-#include <string>
-#include <iostream>
-
-using namespace std;
-
-int main(int argc, char* argv[])
-{
-	string command = "g++ ";
-	string blank = " ";
-	int i;
-
-	for (i = 1; i < argc; i++)
-		command += blank + argv[i];
-
-#ifdef WINDOWS
-	command += " -mwindows";
-#endif
-	command += " -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32";
-
-	return system(command.c_str());
-}
-*/
+//#include <cstdlib>
+//#include <string>
+//#include <iostream>
+//
+//using namespace std;
+//
+//int main(int argc, char* argv[])
+//{
+//	string command = "g++ ";
+//	string blank = " ";
+//	int i;
+//
+//	for (i = 1; i < argc; i++)
+//		command += blank + argv[i];
+//
+//#ifdef WINDOWS
+//	command += " -mwindows";
+//#endif
+//	command += " -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32";
+//
+//	return system(command.c_str());
+//}

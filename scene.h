@@ -3,36 +3,49 @@
 #include "graphics.h"
 
 #include <iostream>
+#include <iomanip>
+#include <string>
 
 #include "parallelepiped.h"
 #include "point.h"
 
-#define TUA_ESC 27
-#define TUA_DIST 2 // смещение
-#define TUA_ALPHA 0.2 // угол
-#define TUA_INC 1.01 // коэф. для увеличения
-#define TUA_DEC 0.99 // коэф. для уменьшения
+#define ESC 27
+
+//class DepthBuffer;
 
 namespace tua {
+
+	struct Parameters {
+		double distance;
+		double alpha;
+		double scale_inc;
+		double scale_dec;
+	};
 
 	class Scene
 	{
 	private:
-		//std::vector<Figure *> _figures;
-		// ZBuffer * _z_buffer;
-		// KeyboardListener * keyboard_listener;
-		//std::tuple<double, double, double> _axes_angles;
-		// window handling
+		Figure * _figure0;
+		Figure * _figure1;
+		const static size_t _objects_max_count = 2;
+		Parameters _parameters = { 2.0, 0.2, 1.01, 0.99 };
 
+		//DepthBuffer * _buffer;
+
+		void draw_figures() const;
+		//void update_buffer();
+		//void listen_keyboard();
+		void show_instruction() const;
 
 	public:
-		Scene() = default;
-		~Scene() = default;
-		// add figure
-		// draw figures
-		// getkey
-		// rotate axes
-		// update buffer
+		Scene(const std::string & title, size_t width = 960, size_t height = 540);
+		Scene(const Scene & scene) = delete;
+		~Scene();
+
+		void add_figure(Figure * figure);
+		void set_objects_movement(double distance, double alpha, double increase, double decrease);
+		//void rotate_axes();
+
 		void run() const;
 	};
 

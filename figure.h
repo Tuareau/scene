@@ -30,6 +30,8 @@ namespace tua {
 		virtual void displace(Sides side, double step) = 0;
 		virtual void scale(double coef) = 0;
 		virtual void spin(Axes axis, double angle) = 0;
+
+		virtual void draw() const = 0;
 	};
 }
 
