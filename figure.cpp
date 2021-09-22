@@ -29,4 +29,22 @@ namespace tua {
 		aver_z /= points.size();
 		return Point(aver_x, aver_y, aver_z);
 	}
+
+	void Figure::displace(Sides side, double step) {
+		for (auto & pol : _polygons)
+			pol.displace(side, step);
+		set_polygons_visibility();
+	}
+
+	void Figure::scale(double coef) {
+		for (auto & pol : _polygons)
+			pol.scale(coef, Figure::average_point());
+		set_polygons_visibility();
+	}
+
+	void Figure::spin(Axes axis, double angle) {
+		for (auto & pol : _polygons)
+			pol.spin(axis, angle, Figure::average_point());
+		set_polygons_visibility();
+	}
 }

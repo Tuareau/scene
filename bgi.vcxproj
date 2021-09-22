@@ -82,6 +82,7 @@
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="text.cxx" />
+    <ClCompile Include="triangularpyramid.cpp" />
     <ClCompile Include="winbgi.cxx" />
     <ClCompile Include="winthread.cxx" />
   </ItemGroup>
@@ -98,6 +99,7 @@
     <ClInclude Include="polygon.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sides.h" />
+    <ClInclude Include="triangularpyramid.h" />
     <ClInclude Include="winbgi.h" />
     <ClInclude Include="winbgim.h" />
     <ClInclude Include="winbgitypes.h" />

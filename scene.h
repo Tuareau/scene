@@ -5,10 +5,12 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 
-#include "depthbuffer.h"
+#include "figure.h"
 #include "parallelepiped.h"
-#include "point.h"
+#include "triangularpyramid.h"
+#include "depthbuffer.h"
 
 #define ESC 27
 
@@ -29,8 +31,7 @@ namespace tua {
 	class Scene
 	{
 	private:
-		Figure * _figure0;
-		Figure * _figure1;
+		std::vector<Figure *> _figures;
 		const static size_t _objects_max_count = 2;
 		Parameters _parameters = { 2.0, 0.2, 1.01, 0.99 };
 

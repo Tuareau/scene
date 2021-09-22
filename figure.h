@@ -31,9 +31,9 @@ namespace tua {
 		//virtual void draw(DepthBuffer * z_buffer) const = 0;
 		//virtual void fill_depth_buffer(DepthBuffer * z_buffer) const = 0;
 
-		virtual void displace(Sides side, double step) = 0;
-		virtual void scale(double coef) = 0;
-		virtual void spin(Axes axis, double angle) = 0;
+		void displace(Sides side, double step);
+		void scale(double coef);
+		void spin(Axes axis, double angle);
 
 		virtual void draw() const = 0;
 	};

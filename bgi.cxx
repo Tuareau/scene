@@ -1,21 +1,27 @@
 #include "point.h"
 #include "parallelepiped.h"
+#include "triangularpyramid.h"
 #include "scene.h"
 
 int main(int argc, char* argv[])
 {
 	using tua::Point;
 	using tua::Parallelepiped;
+	using tua::TriangularPyramid;
 	using tua::Scene;
 
-	Point base(100, 100, 100);
-	Parallelepiped * par = new Parallelepiped(base, 100, 200, 100);
+	Point base0(100, 100, 100);
+	Parallelepiped * par = new Parallelepiped(base0, 90, 160, 90);
+	Point base1(500, 300, 300);
+	TriangularPyramid * pyr = new TriangularPyramid(base1, 120);
 
 	Scene scene("SCENE");
 	scene.add_figure(par);
+	scene.add_figure(pyr);
 	scene.run();
 
 	delete par;
+	delete pyr;
 }
 
 //#include <cstdlib>

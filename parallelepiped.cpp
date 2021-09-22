@@ -5,7 +5,7 @@ namespace tua {
 	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons)
 		: Figure(polygons) {}
 
-	Parallelepiped::Parallelepiped(Point base, int height, int width, int depth) {
+	Parallelepiped::Parallelepiped(Point base, size_t height, size_t width, size_t depth) {
 		Point pt0(base);
 		Point pt1(base.x(), base.y(), base.z() - depth);
 		Point pt2(base.x() + width, base.y(), base.z() - depth);
@@ -28,24 +28,6 @@ namespace tua {
 		_polygons.emplace_back(pts3);
 		_polygons.emplace_back(pts4);
 		_polygons.emplace_back(pts5);
-	}
-
-	void Parallelepiped::displace(Sides side, double step) {
-		for (auto & pol : _polygons)
-			pol.displace(side, step);
-		set_polygons_visibility();
-	}
-
-	void Parallelepiped::scale(double coef) {
-		for (auto & pol : _polygons)
-			pol.scale(coef, Figure::average_point());
-		set_polygons_visibility();
-	}
-
-	void Parallelepiped::spin(Axes axis, double angle) {
-		for (auto & pol : _polygons)
-			pol.spin(axis, angle, Figure::average_point());
-		set_polygons_visibility();
 	}
 
 	void Parallelepiped::set_polygons_visibility() {
