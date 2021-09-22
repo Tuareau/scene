@@ -23,6 +23,9 @@ namespace tua {
 		Polygon(Polygon && other);
 		~Polygon();
 
+		Polygon & operator=(const Polygon & other);
+		Polygon & operator=(Polygon && other);
+
 		// double depth() const;
 		void draw() const;
 
@@ -32,6 +35,7 @@ namespace tua {
 
 		Point average_point() const;
 		const std::vector<Point> & points() const;
+		void set_visibility(bool visible);
 	};
 
 	template<typename... Points>

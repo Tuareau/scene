@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClCompile Include="bgi.cxx" />
     <ClCompile Include="bgiout.cxx" />
+    <ClCompile Include="depthbuffer.cpp" />
     <ClCompile Include="dibutil.cxx" />
     <ClCompile Include="drawing.cxx" />
     <ClCompile Include="figure.cpp" />
@@ -76,6 +77,7 @@
     <ClCompile Include="mouse.cxx" />
     <ClCompile Include="palette.cxx" />
     <ClCompile Include="parallelepiped.cpp" />
+    <ClCompile Include="pixel.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -85,11 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="axes.h" />
+    <ClInclude Include="depthbuffer.h" />
     <ClInclude Include="dibutil.h" />
     <ClInclude Include="figure.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="parallelepiped.h" />
+    <ClInclude Include="pixel.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="polygon.h" />
     <ClInclude Include="scene.h" />

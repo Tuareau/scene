@@ -15,14 +15,31 @@ namespace tua {
 		_polygon_matrix = new Matrix(*other._polygon_matrix);
 	}
 
+	Polygon & Polygon::operator=(const Polygon & other) {
+		_is_visible = other._is_visible;
+		_polygon_matrix = new Matrix(*other._polygon_matrix);
+		return *this;
+	}
+	
 	Polygon::Polygon(Polygon && other) {
 		_is_visible = other._is_visible;
 		_polygon_matrix = other._polygon_matrix;
 		other._polygon_matrix = nullptr;
 	}
 
+	Polygon & Polygon::operator=(Polygon && other) {
+		_is_visible = other._is_visible;
+		_polygon_matrix = other._polygon_matrix;
+		other._polygon_matrix = nullptr;
+		return *this;
+	}
+
 	const std::vector<Point>& Polygon::points() const {
 		return _polygon_matrix->points();
+	}
+
+	void Polygon::set_visibility(bool visible) {
+		_is_visible = visible;
 	}
 
 	void Polygon::draw() const {

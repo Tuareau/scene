@@ -5,6 +5,7 @@ namespace tua {
 	Scene::Scene(const std::string & title, size_t width, size_t height)
 		: _figure0(nullptr), _figure1(nullptr) {
 		initwindow(width, height, title.c_str());
+		//_buffer = new DepthBuffer(width, height, BLACK);
 	}
 
 	void Scene::add_figure(Figure * figure) {
@@ -34,9 +35,16 @@ namespace tua {
 	void Scene::draw_figures() const {
 		if (_figure0) _figure0->draw();
 		if (_figure1) _figure1->draw();
+		//if (_figure0) _figure0->draw(_buffer);
+		//if (_figure1) _figure1->draw(_buffer);
 	}
 
-	void Scene::run() const {
+	//void Scene::update_buffer() {
+	//	if (_figure0) _figure0->fill_depth_buffer(_buffer);
+	//	if (_figure1) _figure1->fill_depth_buffer(_buffer);
+	//}
+
+	void Scene::run() {
 		show_instruction();
 		draw_figures();
 
@@ -48,71 +56,85 @@ namespace tua {
 			if (GetKeyState('A') & 0x8000) {
 				_figure0->displace(tua::Sides::LEFT, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('D') & 0x8000) {
 				_figure0->displace(tua::Sides::RIGHT, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('S') & 0x8000) {
 				_figure0->displace(tua::Sides::DOWN, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('W') & 0x8000) {
 				_figure0->displace(tua::Sides::UP, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('R') & 0x8000) {
 				_figure0->displace(tua::Sides::CLOSER, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('T') & 0x8000) {
 				_figure0->displace(tua::Sides::FURTHER, _parameters.distance);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('Z') & 0x8000) {
 				_figure0->spin(tua::Axes::X, -_parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('X') & 0x8000) {
 				_figure0->spin(tua::Axes::X, _parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('C') & 0x8000) {
 				_figure0->spin(tua::Axes::Y, -_parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('V') & 0x8000) {
 				_figure0->spin(tua::Axes::Y, _parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('B') & 0x8000) {
 				_figure0->spin(tua::Axes::Z, -_parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('N') & 0x8000) {
 				_figure0->spin(tua::Axes::Z, _parameters.alpha);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('Q') & 0x8000) {
 				_figure0->scale(_parameters.scale_dec);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 			if (GetKeyState('E') & 0x8000) {
 				_figure0->scale(_parameters.scale_inc);
 				clearviewport();
+				//update_buffer();
 				draw_figures();
 			}
 		}

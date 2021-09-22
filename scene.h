@@ -6,12 +6,16 @@
 #include <iomanip>
 #include <string>
 
+#include "depthbuffer.h"
 #include "parallelepiped.h"
 #include "point.h"
 
 #define ESC 27
 
-//class DepthBuffer;
+//enum colors {
+//	BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
+//	LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE
+//};
 
 namespace tua {
 
@@ -34,7 +38,6 @@ namespace tua {
 
 		void draw_figures() const;
 		//void update_buffer();
-		//void listen_keyboard();
 		void show_instruction() const;
 
 	public:
@@ -46,7 +49,7 @@ namespace tua {
 		void set_objects_movement(double distance, double alpha, double increase, double decrease);
 		//void rotate_axes();
 
-		void run() const;
+		void run();
 	};
 
 }

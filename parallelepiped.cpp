@@ -33,16 +33,35 @@ namespace tua {
 	void Parallelepiped::displace(Sides side, double step) {
 		for (auto & pol : _polygons)
 			pol.displace(side, step);
+		set_polygons_visibility();
 	}
 
 	void Parallelepiped::scale(double coef) {
 		for (auto & pol : _polygons)
 			pol.scale(coef, Figure::average_point());
+		set_polygons_visibility();
 	}
 
 	void Parallelepiped::spin(Axes axis, double angle) {
 		for (auto & pol : _polygons)
 			pol.spin(axis, angle, Figure::average_point());
+		set_polygons_visibility();
+	}
+
+	void Parallelepiped::set_polygons_visibility() {
+		auto less_aver_point_depth {
+			[](const auto & polygon0, const auto & polygon1) {
+				return polygon0.average_point().z() < polygon1.average_point().z();
+			}
+		};
+		std::sort(_polygons.begin(), _polygons.end(), less_aver_point_depth);
+		const auto half = _polygons.size() / 2;
+		for (size_t i = 0; i < _polygons.size(); ++i) {
+			if (i < half)
+				_polygons[i].set_visibility(false);
+			else 
+				_polygons[i].set_visibility(true);
+		}
 	}
 
 	void Parallelepiped::draw() const {

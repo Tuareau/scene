@@ -10,6 +10,9 @@ namespace tua {
 
 	class Parallelepiped : public Figure
 	{
+	private:
+		void set_polygons_visibility() override;
+
 	public:
 		Parallelepiped() = default;
 		Parallelepiped(std::vector<Polygon> & polygons);
@@ -25,5 +28,4 @@ namespace tua {
 
 		void draw() const;
 	};
-
 }

@@ -8,11 +8,15 @@
 #include "sides.h"
 #include "polygon.h"
 #include "point.h"
+#include "depthbuffer.h"
 
 namespace tua {
 
 	class Figure
 	{
+	private:
+		virtual void set_polygons_visibility() = 0;
+
 	protected:
 		std::vector<Polygon> _polygons;
 
@@ -24,8 +28,8 @@ namespace tua {
 			: _polygons(polygons) {}
 		~Figure() = default;
 
-		//virtual void draw(Matrix * z_buffer) const = 0;
-		//virtual void fill_depth_buffer(Matrix * z_buffer) const = 0;
+		//virtual void draw(DepthBuffer * z_buffer) const = 0;
+		//virtual void fill_depth_buffer(DepthBuffer * z_buffer) const = 0;
 
 		virtual void displace(Sides side, double step) = 0;
 		virtual void scale(double coef) = 0;
