@@ -24,8 +24,7 @@ namespace tua {
 	struct Parameters {
 		double distance;
 		double alpha;
-		double scale_inc;
-		double scale_dec;
+		double scale;
 	};
 
 	class Scene
@@ -33,12 +32,12 @@ namespace tua {
 	private:
 		std::vector<Figure *> _figures;
 		const static size_t _objects_max_count = 2;
-		Parameters _parameters = { 2.0, 0.2, 1.01, 0.99 };
+		Parameters _parameters = { 2.0, 0.2, 0.01 };
 
-		//DepthBuffer * _buffer;
+		DepthBuffer * _buffer;
 
-		void draw_figures() const;
-		//void update_buffer();
+		void draw() const;
+		void update_buffer();
 		void show_instruction() const;
 
 	public:
@@ -47,7 +46,7 @@ namespace tua {
 		~Scene();
 
 		void add_figure(Figure * figure);
-		void set_objects_movement(double distance, double alpha, double increase, double decrease);
+		void set_objects_movement(double distance, double alpha, double scale);
 		//void rotate_axes();
 
 		void run();

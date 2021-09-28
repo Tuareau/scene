@@ -10,18 +10,10 @@ namespace tua {
 
 	class TriangularPyramid : public Figure
 	{
-	private:
-		void set_polygons_visibility() override;
-
 	public:
 		TriangularPyramid() = default;
-		TriangularPyramid(std::vector<Polygon> & polygons);
-		TriangularPyramid(Point base, size_t length);
+		TriangularPyramid(std::vector<Polygon> & polygons, int color);
+		TriangularPyramid(Point base, size_t length, int color);
 		~TriangularPyramid() = default;
-
-		//virtual void draw(Matrix * z_buffer) const override;
-		//virtual void fill_depth_buffer(Matrix * z_buffer) const override;
-
-		void draw() const;
 	};
 }

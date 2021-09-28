@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buffer.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>

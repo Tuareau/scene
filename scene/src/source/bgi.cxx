@@ -11,12 +11,12 @@ int main(int argc, char* argv[])
 	using tua::Scene;
 
 	Point base0(100, 100, 100);
-	Parallelepiped * par = new Parallelepiped(base0, 90, 160, 90);
+	Parallelepiped * par = new Parallelepiped(base0, 90, 160, 90, LIGHTCYAN);
 	Point base1(500, 300, 300);
-	TriangularPyramid * pyr = new TriangularPyramid(base1, 120);
+	TriangularPyramid * pyr = new TriangularPyramid(base1, 120, MAGENTA);
 
 	Scene scene("SCENE");
-	scene.add_figure(par);
+	//scene.add_figure(par);
 	scene.add_figure(pyr);
 	scene.run();
 

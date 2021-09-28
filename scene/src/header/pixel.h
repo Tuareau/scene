@@ -18,13 +18,21 @@ namespace tua {
 		Pixel(int x, int y, int depth, int color = WHITE);
 		~Pixel() = default;
 
+		Pixel & operator=(const Pixel & other) = default;
+
 		int x() const;
 		int y() const;
 		int depth() const;
+		int color() const;
+
+		void set_depth(int depth);
+		void set_color(int color);
 
 		//bool operator==(const Pixel & other);
 		//bool operator<(const Pixel & other);
 		//bool operator!=(const Point & other);
 	};
+
+	using Bounds = std::tuple<Pixel, size_t, size_t>;
 
 };

@@ -14,6 +14,12 @@ namespace tua {
 
 	int Pixel::depth() const { return _depth; }
 
+	int Pixel::color() const { return _color; }
+
+	void Pixel::set_depth(int depth) { _depth = depth; }
+
+	void Pixel::set_color(int color) { _color = color; }
+
 	//bool Pixel::operator==(const Pixel & other) {
 	//	return _x == other._x && _y == other._y;
 	//}

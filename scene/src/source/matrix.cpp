@@ -147,7 +147,7 @@ namespace tua {
 		delete rotate_transform;
 	}
 
-	Matrix * tua::make_coordinates_y_transform(bool is_inverse, double angle) {
+	Matrix * make_coordinates_y_transform(bool is_inverse, double angle) {
 		double rad = 3.14 / 180.0 * angle;
 		auto cos_value = std::cos(rad), sin_value = std::sin(rad);
 		if (is_inverse) 

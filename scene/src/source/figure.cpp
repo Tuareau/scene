@@ -2,6 +2,11 @@
 
 namespace tua {
 
+	Figure::Figure(std::vector<Polygon> & polygons, int color)
+		: _polygons(polygons), _color(color) {}
+
+	Figure::Figure(int color) : _color(color) {}
+
 	Point Figure::average_point() const
 	{		
 		std::vector<Point> points;
@@ -33,18 +38,40 @@ namespace tua {
 	void Figure::displace(Sides side, double step) {
 		for (auto & pol : _polygons)
 			pol.displace(side, step);
-		set_polygons_visibility();
 	}
 
 	void Figure::scale(double coef) {
 		for (auto & pol : _polygons)
 			pol.scale(coef, Figure::average_point());
-		set_polygons_visibility();
 	}
 
 	void Figure::spin(Axes axis, double angle) {
 		for (auto & pol : _polygons)
 			pol.spin(axis, angle, Figure::average_point());
-		set_polygons_visibility();
+	}
+
+	Bounds Figure::bounds() const {		
+		using std::round;
+		double x_min = 0.0, y_min = 0.0;
+		double x_max = 0.0, y_max = 0.0;
+		for (const auto & polygon : _polygons) {
+			const std::vector<Point> & pts = polygon.points();
+			for (const auto & pt : pts) {
+				if (x_min > pt.x()) x_min = pt.x();
+				if (y_min > pt.y()) y_min = pt.y();
+				if (x_max < pt.x()) x_max = pt.x();
+				if (y_max < pt.x()) y_max = pt.y();
+			}
+		}
+		return Bounds {
+			std::make_tuple(Pixel(x_min, y_min, 0.0), 
+			size_t(round(x_max - x_min)), 
+			size_t(round(y_max - y_min)))
+		};
+	}
+
+	void Figure::fill_depth_buffer(DepthBuffer * z_buffer)	{
+		for (auto & pol : _polygons)
+			pol.fill_depth_buffer(z_buffer, _color);
 	}
 }

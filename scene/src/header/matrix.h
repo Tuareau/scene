@@ -13,8 +13,6 @@ namespace tua {
 	{
 	private:
 		std::vector<Point> _points;
-		
-		Point & operator[](size_t idx);
 
 	public:
 		Matrix() = default;
@@ -29,8 +27,10 @@ namespace tua {
 		void scale(double coef, const Point & base);
 
 		void multiply(const Matrix & other);
-		
+
+		Point & operator[](size_t idx);
 		const Point operator[](size_t idx) const;
+
 		size_t size() const;
 		Point average_point() const;
 		const std::vector<Point> & points() const;

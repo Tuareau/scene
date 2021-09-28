@@ -6,7 +6,9 @@
 #include "axes.h"
 #include "sides.h"
 #include "matrix.h"
+#include "depthbuffer.h"
 #include "graphics.h"
+#include "pixel.h"
 
 namespace tua {
 
@@ -14,7 +16,10 @@ namespace tua {
 	{
 	private:
 		Matrix * _polygon_matrix;
-		bool _is_visible;
+
+		std::vector<Pixel> collect_pixels(const Point & p1, const Point & p2) const;
+		void fill_pixels(DepthBuffer * z_buffer, const std::vector<Pixel> & pixels, int color);
+		void fill_edges(DepthBuffer * z_buffer, int color = WHITE);
 
 	public:
 		Polygon();
@@ -26,16 +31,15 @@ namespace tua {
 		Polygon & operator=(const Polygon & other);
 		Polygon & operator=(Polygon && other);
 
-		// double depth() const;
-		void draw() const;
-
 		void displace(Sides side, double step);
 		void scale(double coef, const Point & base);
 		void spin(Axes axis, double angle, const Point & base);
 
 		Point average_point() const;
 		const std::vector<Point> & points() const;
-		void set_visibility(bool visible);
+
+		void fill_depth_buffer(DepthBuffer * z_buffer, int color);
+
 	};
 
 	template<typename... Points>

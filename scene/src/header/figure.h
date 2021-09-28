@@ -8,34 +8,31 @@
 #include "sides.h"
 #include "polygon.h"
 #include "point.h"
+#include "pixel.h"
 #include "depthbuffer.h"
 
 namespace tua {
 
 	class Figure
 	{
-	private:
-		virtual void set_polygons_visibility() = 0;
-
 	protected:
 		std::vector<Polygon> _polygons;
+		int _color;
 
 		Point average_point() const;
 
 	public:
 		Figure() = default;
-		Figure(std::vector<Polygon> & polygons)
-			: _polygons(polygons) {}
+		Figure(std::vector<Polygon> & polygons, int color);
+		explicit Figure(int color);
 		~Figure() = default;
-
-		//virtual void draw(DepthBuffer * z_buffer) const = 0;
-		//virtual void fill_depth_buffer(DepthBuffer * z_buffer) const = 0;
 
 		void displace(Sides side, double step);
 		void scale(double coef);
 		void spin(Axes axis, double angle);
 
-		virtual void draw() const = 0;
+		Bounds bounds() const;
+		void fill_depth_buffer(DepthBuffer * z_buffer);
 	};
 }
 
