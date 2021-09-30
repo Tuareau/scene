@@ -43,9 +43,8 @@ namespace tua {
 
 	void Scene::draw() const {
 		clearviewport();
-		for (const auto& figure : _figures) {
+		for (const auto & figure : _figures)
 			_buffer->draw(figure->bounds());
-		}
 	}
 
 	void Scene::update_buffer() {
@@ -197,12 +196,12 @@ namespace tua {
 					update_buffer();
 					draw();
 				}
-				if (GetKeyState('U') & 0x8000) {
+				if (GetKeyState('O') & 0x8000) {
 					_figures[1]->scale(1.0 + _parameters.scale);
 					update_buffer();
 					draw();
 				}
-				if (GetKeyState('O') & 0x8000) {
+				if (GetKeyState('U') & 0x8000) {
 					_figures[1]->scale(1.0 - _parameters.scale);
 					update_buffer();
 					draw();
