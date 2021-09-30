@@ -10,6 +10,48 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scene\bgi\header\dibapi.h" />
+    <ClInclude Include="scene\bgi\header\dibutil.h" />
+    <ClInclude Include="scene\bgi\header\graphics.h" />
+    <ClInclude Include="scene\bgi\header\winbgi.h" />
+    <ClInclude Include="scene\bgi\header\winbgim.h" />
+    <ClInclude Include="scene\bgi\header\winbgitypes.h" />
+    <ClInclude Include="scene\src\header\axes.h" />
+    <ClInclude Include="scene\src\header\depthbuffer.h" />
+    <ClInclude Include="scene\src\header\figure.h" />
+    <ClInclude Include="scene\src\header\matrix.h" />
+    <ClInclude Include="scene\src\header\parallelepiped.h" />
+    <ClInclude Include="scene\src\header\pixel.h" />
+    <ClInclude Include="scene\src\header\point.h" />
+    <ClInclude Include="scene\src\header\polygon.h" />
+    <ClInclude Include="scene\src\header\scene.h" />
+    <ClInclude Include="scene\src\header\sides.h" />
+    <ClInclude Include="scene\src\header\triangularpyramid.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scene\bgi\source\bgiout.cxx" />
+    <ClCompile Include="scene\bgi\source\dibutil.cxx" />
+    <ClCompile Include="scene\bgi\source\drawing.cxx" />
+    <ClCompile Include="scene\bgi\source\file.cxx" />
+    <ClCompile Include="scene\bgi\source\main.cxx" />
+    <ClCompile Include="scene\bgi\source\misc.cxx" />
+    <ClCompile Include="scene\bgi\source\mouse.cxx" />
+    <ClCompile Include="scene\bgi\source\palette.cxx" />
+    <ClCompile Include="scene\bgi\source\text.cxx" />
+    <ClCompile Include="scene\bgi\source\winbgi.cxx" />
+    <ClCompile Include="scene\bgi\source\winthread.cxx" />
+    <ClCompile Include="scene\src\source\bgi.cxx" />
+    <ClCompile Include="scene\src\source\depthbuffer.cpp" />
+    <ClCompile Include="scene\src\source\figure.cpp" />
+    <ClCompile Include="scene\src\source\matrix.cpp" />
+    <ClCompile Include="scene\src\source\parallelepiped.cpp" />
+    <ClCompile Include="scene\src\source\pixel.cpp" />
+    <ClCompile Include="scene\src\source\point.cpp" />
+    <ClCompile Include="scene\src\source\polygon.cpp" />
+    <ClCompile Include="scene\src\source\scene.cpp" />
+    <ClCompile Include="scene\src\source\triangularpyramid.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B0A1AF87-F642-456A-9C64-9C7ABBDF9EC1}</ProjectGuid>
     <RootNamespace>bgi</RootNamespace>
@@ -45,6 +87,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\pavma\source\repos\coursework\scene\scene\src\header;C:\Users\pavma\source\repos\coursework\scene\scene\bgi\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,47 +106,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="bgi.cxx" />
-    <ClCompile Include="bgiout.cxx" />
-    <ClCompile Include="depthbuffer.cpp" />
-    <ClCompile Include="dibutil.cxx" />
-    <ClCompile Include="drawing.cxx" />
-    <ClCompile Include="figure.cpp" />
-    <ClCompile Include="file.cxx" />
-    <ClCompile Include="main.cxx" />
-    <ClCompile Include="matrix.cpp" />
-    <ClCompile Include="misc.cxx" />
-    <ClCompile Include="mouse.cxx" />
-    <ClCompile Include="palette.cxx" />
-    <ClCompile Include="parallelepiped.cpp" />
-    <ClCompile Include="pixel.cpp" />
-    <ClCompile Include="point.cpp" />
-    <ClCompile Include="polygon.cpp" />
-    <ClCompile Include="scene.cpp" />
-    <ClCompile Include="text.cxx" />
-    <ClCompile Include="triangularpyramid.cpp" />
-    <ClCompile Include="winbgi.cxx" />
-    <ClCompile Include="winthread.cxx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="axes.h" />
-    <ClInclude Include="depthbuffer.h" />
-    <ClInclude Include="dibutil.h" />
-    <ClInclude Include="figure.h" />
-    <ClInclude Include="graphics.h" />
-    <ClInclude Include="matrix.h" />
-    <ClInclude Include="parallelepiped.h" />
-    <ClInclude Include="pixel.h" />
-    <ClInclude Include="point.h" />
-    <ClInclude Include="polygon.h" />
-    <ClInclude Include="scene.h" />
-    <ClInclude Include="sides.h" />
-    <ClInclude Include="triangularpyramid.h" />
-    <ClInclude Include="winbgi.h" />
-    <ClInclude Include="winbgim.h" />
-    <ClInclude Include="winbgitypes.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
