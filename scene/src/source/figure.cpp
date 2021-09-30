@@ -52,20 +52,23 @@ namespace tua {
 
 	Bounds Figure::bounds() const {		
 		using std::round;
-		double x_min = 0.0, y_min = 0.0;
-		double x_max = 0.0, y_max = 0.0;
+		const auto & pts0 = _polygons[0].points();
+		const auto & first_pt = pts0[0];
+
+		double x_min = first_pt.x(), y_min = first_pt.y();
+		double x_max = first_pt.x(), y_max = first_pt.y();
 		for (const auto & polygon : _polygons) {
 			const std::vector<Point> & pts = polygon.points();
 			for (const auto & pt : pts) {
 				if (x_min > pt.x()) x_min = pt.x();
 				if (y_min > pt.y()) y_min = pt.y();
 				if (x_max < pt.x()) x_max = pt.x();
-				if (y_max < pt.x()) y_max = pt.y();
+				if (y_max < pt.y()) y_max = pt.y();
 			}
 		}
 		return Bounds {
-			std::make_tuple(Pixel(x_min, y_min, 0.0), 
-			size_t(round(x_max - x_min)), 
+			std::make_tuple(Pixel(int(round(x_min)), int(round(y_min)), 0),
+			size_t(round(x_max - x_min)),
 			size_t(round(y_max - y_min)))
 		};
 	}

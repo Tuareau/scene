@@ -32,7 +32,7 @@ namespace tua {
 	private:
 		std::vector<Figure *> _figures;
 		const static size_t _objects_max_count = 2;
-		Parameters _parameters = { 2.0, 0.2, 0.01 };
+		Parameters _parameters = { 8.0, 10.0, 0.1 };
 
 		DepthBuffer * _buffer;
 

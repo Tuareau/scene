@@ -18,6 +18,7 @@
     <ClInclude Include="scene\bgi\header\winbgim.h" />
     <ClInclude Include="scene\bgi\header\winbgitypes.h" />
     <ClInclude Include="scene\src\header\axes.h" />
+    <ClInclude Include="scene\src\header\bounds.h" />
     <ClInclude Include="scene\src\header\depthbuffer.h" />
     <ClInclude Include="scene\src\header\figure.h" />
     <ClInclude Include="scene\src\header\matrix.h" />

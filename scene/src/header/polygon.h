@@ -25,11 +25,11 @@ namespace tua {
 		Polygon();
 		Polygon(const std::vector<Point> & points);
 		Polygon(const Polygon & other);
-		Polygon(Polygon && other);
+		Polygon(Polygon && other) noexcept;
 		~Polygon();
 
 		Polygon & operator=(const Polygon & other);
-		Polygon & operator=(Polygon && other);
+		Polygon & operator=(Polygon && other) noexcept;
 
 		void displace(Sides side, double step);
 		void scale(double coef, const Point & base);

@@ -33,6 +33,4 @@ namespace tua {
 		//bool operator!=(const Point & other);
 	};
 
-	using Bounds = std::tuple<Pixel, size_t, size_t>;
-
 };

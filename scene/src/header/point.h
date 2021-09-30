@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pixel.h"
+#include <iostream>
 
 namespace tua {
 
@@ -17,12 +17,10 @@ namespace tua {
 	public:
 		Point();
 		Point(const Point & other) = default;
-		Point(const Pixel & other);
 		Point(double x, double y, double z, double delta = 1.0);
 		~Point() = default;
 
 		Point & operator=(const Point & other) = default;
-		Point & operator=(const Pixel & other);
 
 		double x() const;
 		double y() const;

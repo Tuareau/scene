@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <cmath>
-#include <exception>
+#include <stdexcept>
 
 #include "point.h"
 #include "axes.h"

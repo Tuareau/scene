@@ -5,7 +5,7 @@ namespace tua {
 	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons, int color)
 		: Figure(polygons, color) {}
 
-	Parallelepiped::Parallelepiped(Point base, size_t height, size_t width, size_t depth, int color)
+	Parallelepiped::Parallelepiped(Point base, size_t width, size_t height, size_t depth, int color)
 		: Figure(color) {
 		Point pt0(base);
 		Point pt1(base.x(), base.y(), base.z() - depth);
@@ -30,20 +30,5 @@ namespace tua {
 		_polygons.emplace_back(pts4);
 		_polygons.emplace_back(pts5);
 	}
-
-	//void Parallelepiped::set_polygons_visibility() {
-	//	auto less_aver_point_depth {
-	//		[](const auto & polygon0, const auto & polygon1) {
-	//			return polygon0.average_point().z() < polygon1.average_point().z();
-	//		}
-	//	};
-	//	std::sort(_polygons.begin(), _polygons.end(), less_aver_point_depth);
-	//	const auto half = _polygons.size() / 2;
-	//	for (size_t i = 0; i < _polygons.size(); ++i) {
-	//		if (i < half)
-	//			_polygons[i].set_visibility(false);
-	//		else 
-	//			_polygons[i].set_visibility(true);
-	//	}
-	//}
+	
 }

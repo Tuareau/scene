@@ -6,6 +6,7 @@
 
 #include "axes.h"
 #include "sides.h"
+#include "bounds.h"
 #include "polygon.h"
 #include "point.h"
 #include "pixel.h"

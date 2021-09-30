@@ -8,6 +8,7 @@
 
 #include "graphics.h"
 #include "pixel.h"
+#include "bounds.h"
 
 using std::vector;
 
@@ -21,9 +22,12 @@ namespace tua {
 	class DepthBuffer
 	{
 	private:
-		vector<vector<Pixel>> _screen_map;
+		vector<vector<Pixel>> _buffer;
+		vector<Bounds> _used_bounds;
 		Size _size;
 		int _base_color;
+
+		void transform_and_add_bound(const Bounds & bound);
 
 	public:
 		DepthBuffer() = delete;
@@ -36,10 +40,7 @@ namespace tua {
 		size_t height() const;
 
 		void clear();
-		void draw(const Bounds & bounds) const;
-
-		void SHOW_DEPTHS() const;
-		void SHOW_COLORS() const;
+		void draw(const Bounds & bound);
 
 	};
 

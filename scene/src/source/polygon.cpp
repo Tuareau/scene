@@ -18,7 +18,7 @@ namespace tua {
 		return *this;
 	}
 	
-	Polygon::Polygon(Polygon && other) {
+	Polygon::Polygon(Polygon && other) noexcept {
 		_polygon_matrix = other._polygon_matrix;
 		other._polygon_matrix = nullptr;
 	}	
@@ -27,13 +27,13 @@ namespace tua {
 		delete _polygon_matrix;
 	}
 
-	Polygon & Polygon::operator=(Polygon && other) {
+	Polygon & Polygon::operator=(Polygon && other) noexcept {
 		_polygon_matrix = other._polygon_matrix;
 		other._polygon_matrix = nullptr;
 		return *this;
 	}
 
-	const std::vector<Point>& Polygon::points() const {
+	const std::vector<Point> & Polygon::points() const {
 		return _polygon_matrix->points();
 	}
 
@@ -93,7 +93,7 @@ namespace tua {
 
 			edge_pixels = std::move(collect_pixels(second, third));
 			for (const auto & pixel : edge_pixels) {
-				Point curr = pixel;
+				Point curr(pixel.x(), pixel.y(), pixel.depth());
 				inner_pixels = std::move(collect_pixels(first, curr));
 				fill_pixels(z_buffer, inner_pixels, color);
 				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
@@ -105,21 +105,21 @@ namespace tua {
 			const Point & third = (*_polygon_matrix)[2];
 			const Point & fourth = (*_polygon_matrix)[3];
 
-			edge_pixels = std::move(collect_pixels(second, third));
+			edge_pixels = std::move(collect_pixels(first, third));
 			for (const auto & pixel : edge_pixels) {
-				Point curr = pixel;
-				inner_pixels = std::move(collect_pixels(first, curr));
+				Point curr(pixel.x(), pixel.y(), pixel.depth());
+				inner_pixels = std::move(collect_pixels(second, curr));
 				fill_pixels(z_buffer, inner_pixels, color);
 				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
 			}
 			for (const auto & pixel : edge_pixels) {
-				Point curr = pixel;
+				Point curr(pixel.x(), pixel.y(), pixel.depth());
 				inner_pixels = std::move(collect_pixels(fourth, curr));
 				fill_pixels(z_buffer, inner_pixels, color);
 				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
 			}
 		}
-		fill_edges(z_buffer, color);
+		fill_edges(z_buffer, WHITE);
 	}
 
 	void Polygon::fill_edges(DepthBuffer * z_buffer, int color) {
@@ -127,13 +127,13 @@ namespace tua {
 		const auto & first = points[0];
 		const auto & last = points[points.size() - 1];
 
-		const auto & edge = collect_pixels(first, last);
+		const auto edge = std::move(collect_pixels(first, last));
 		fill_pixels(z_buffer, edge, color);
 
 		for (size_t i = 0; i < points.size() - 1; ++i) {
-			const auto pt0 = points[i];
-			const auto pt1 = points[i + 1];
-			const auto & edge = collect_pixels(pt0, pt1);
+			const auto & pt0 = points[i];
+			const auto & pt1 = points[i + 1];
+			const auto edge = std::move(collect_pixels(pt0, pt1));
 			fill_pixels(z_buffer, edge, color);
 		}
 	}
@@ -145,7 +145,7 @@ namespace tua {
 				continue;
 			if (y >= z_buffer->height() || y < 0)
 				continue;
-			if (z > (*z_buffer)(x, y).depth()) {
+			if (z >= (*z_buffer)(x, y).depth()) {
 				(*z_buffer)(x, y).set_depth(z);
 				(*z_buffer)(x, y).set_color(color);
 			}
@@ -156,16 +156,16 @@ namespace tua {
 		using std::round;
 		using std::abs;
 
-		int x1 = round(p1.x());
-		int y1 = round(p1.y());
-		int z1 = round(p1.z());
+		auto x1 = int(round(p1.x()));
+		auto y1 = int(round(p1.y()));
+		auto z1 = int(round(p1.z()));
 
-		int x2 = round(p2.x());
-		int y2 = round(p2.y());
-		int z2 = round(p2.z());
+		auto x2 = int(round(p2.x()));
+		auto y2 = int(round(p2.y()));
+		auto z2 = int(round(p2.z()));
 
 		std::vector<Pixel> pixels;
-		pixels.emplace_back(round(p1.x()), round(p1.y()), round(p1.z()));
+		pixels.emplace_back(x1, y1, z1);
 
 		int dx = abs(x2 - x1);
 		int dy = abs(y2 - y1);
