@@ -11,8 +11,7 @@ namespace tua {
 		return _color;
 	}
 
-	Point Figure::average_point() const
-	{		
+	Point Figure::average_point() const {		
 		std::vector<Point> points;
 		for (const auto & polygon : _polygons) {
 			const auto & pts = polygon.points();
@@ -32,18 +31,21 @@ namespace tua {
 	}
 
 	void Figure::displace(Sides side, double step) {
-		for (auto & pol : _polygons)
+		for (auto & pol : _polygons) {
 			pol.displace(side, step);
+		}
 	}
 
 	void Figure::scale(double coef) {
-		for (auto & pol : _polygons)
+		for (auto & pol : _polygons) {
 			pol.scale(coef, Figure::average_point());
+		}
 	}
 
 	void Figure::spin(Axes axis, double angle) {
-		for (auto & pol : _polygons)
+		for (auto & pol : _polygons) {
 			pol.spin(axis, angle, Figure::average_point());
+		}
 	}
 
 	Bounds Figure::bounds() const {		
@@ -70,7 +72,8 @@ namespace tua {
 	}
 
 	void Figure::fill_depth_buffer(DepthBuffer * z_buffer)	{
-		for (auto & pol : _polygons)
+		for (auto & pol : _polygons) {
 			pol.fill_depth_buffer(z_buffer, _color);
+		}
 	}
 }

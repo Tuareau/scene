@@ -50,15 +50,15 @@ namespace tua {
 		}
 	}
 
-	void DepthBuffer::transform_and_add_bound(const Bounds & bound) {
+	Bounds DepthBuffer::transform_bound(const Bounds & bound) {
 		const auto & [pixel, width, height] = bound;
 		int base_x = pixel.x();
 		int base_y = pixel.y();
 
-		if (base_x > _size.width || base_y > _size.height)
-			return;
-		if (base_x + width < 0 || base_y + height < 0)
-			return;
+		//if (base_x > _size.width || base_y > _size.height)
+		//	return;
+		//if (base_x + width < 0 || base_y + height < 0)
+		//	return;
 
 		size_t finite_x, finite_y;
 		if (base_x < 0) {
@@ -80,10 +80,11 @@ namespace tua {
 				finite_y = _size.height;
 		}
 
-		const auto & used_bound {
-			std::make_tuple(Pixel(base_x, base_y, 0), finite_x - base_x, finite_y - base_y)
-		};
-		_used_bounds.push_back(used_bound);
+		return std::make_tuple(Pixel(base_x, base_y, 0), finite_x - base_x, finite_y - base_y);
+	}
+
+	void DepthBuffer::add_bound(const Bounds & bound) {
+		_used_bounds.push_back(transform_bound(bound));
 	}
 
 }

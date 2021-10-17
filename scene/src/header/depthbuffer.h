@@ -27,7 +27,8 @@ namespace tua {
 		Size _size;
 		int _base_color;
 
-		void transform_and_add_bound(const Bounds & bound);
+		Bounds transform_bound(const Bounds & bound);
+		void add_bound(const Bounds & bound);
 
 	public:
 		DepthBuffer() = delete;

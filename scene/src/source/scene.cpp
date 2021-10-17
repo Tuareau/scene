@@ -70,8 +70,9 @@ namespace tua {
 
 	void Scene::update_buffer() {
 		_buffer->clear();
-		for (const auto & figure : _figures)
+		for (const auto & figure : _figures) {
 			figure->fill_depth_buffer(_buffer);
+		}
 	}
 
 	void Scene::run() {
@@ -148,7 +149,6 @@ namespace tua {
 				default:
 					break;
 				}
-				getch();
 			}
 
 			if (figure1) {
@@ -202,7 +202,6 @@ namespace tua {
 				default:
 					break;
 				}				
-				getch();
 			}
 		}
 	}

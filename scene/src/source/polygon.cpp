@@ -3,24 +3,29 @@
 namespace tua {
 
 	Polygon::Polygon()
-		: _polygon_matrix(nullptr) {}
+		: _polygon_matrix(nullptr), 
+		_points_count(PolygonPointsCount::NONE) {}
 
 	Polygon::Polygon(const std::vector<Point> & points) {
 		_polygon_matrix = new Matrix(points);
+		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
 	}
 
 	Polygon::Polygon(const Polygon & other) {
 		_polygon_matrix = new Matrix(*other._polygon_matrix);
+		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
 	}
 
 	Polygon & Polygon::operator=(const Polygon & other) {
 		_polygon_matrix = new Matrix(*other._polygon_matrix);
+		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
 		return *this;
 	}
 	
 	Polygon::Polygon(Polygon && other) noexcept {
 		_polygon_matrix = other._polygon_matrix;
 		other._polygon_matrix = nullptr;
+		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
 	}	
 	
 	Polygon::~Polygon() {
@@ -30,6 +35,7 @@ namespace tua {
 	Polygon & Polygon::operator=(Polygon && other) noexcept {
 		_polygon_matrix = other._polygon_matrix;
 		other._polygon_matrix = nullptr;
+		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
 		return *this;
 	}
 
@@ -83,43 +89,40 @@ namespace tua {
 	}
 
 	void Polygon::fill_depth_buffer(DepthBuffer * z_buffer, int color) {
-		const auto points_count = _polygon_matrix->size();
 		std::vector<Pixel> edge_pixels;
-		std::vector<Pixel> inner_pixels;
-		if (points_count == 3) {
+		switch (_points_count) {
+		case PolygonPointsCount::THREE:
 			const Point & first = (*_polygon_matrix)[0];
 			const Point & second = (*_polygon_matrix)[1];
 			const Point & third = (*_polygon_matrix)[2];
 
-			edge_pixels = std::move(collect_pixels(second, third));
-			for (const auto & pixel : edge_pixels) {
-				Point curr(pixel.x(), pixel.y(), pixel.depth());
-				inner_pixels = std::move(collect_pixels(first, curr));
-				fill_pixels(z_buffer, inner_pixels, color);
-				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
-			}
-		}
-		else if (points_count == 4) {
+			edge_pixels = collect_pixels(second, third);
+			fill_area(z_buffer, { first, edge_pixels }, color);
+			break;
+		case PolygonPointsCount::FOUR:
 			const Point & first = (*_polygon_matrix)[0];
 			const Point & second = (*_polygon_matrix)[1];
 			const Point & third = (*_polygon_matrix)[2];
 			const Point & fourth = (*_polygon_matrix)[3];
 
-			edge_pixels = std::move(collect_pixels(first, third));
-			for (const auto & pixel : edge_pixels) {
-				Point curr(pixel.x(), pixel.y(), pixel.depth());
-				inner_pixels = std::move(collect_pixels(second, curr));
-				fill_pixels(z_buffer, inner_pixels, color);
-				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
-			}
-			for (const auto & pixel : edge_pixels) {
-				Point curr(pixel.x(), pixel.y(), pixel.depth());
-				inner_pixels = std::move(collect_pixels(fourth, curr));
-				fill_pixels(z_buffer, inner_pixels, color);
-				inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
-			}
+			edge_pixels = collect_pixels(first, third);
+			fill_area(z_buffer, { second, edge_pixels }, color);
+			fill_area(z_buffer, { fourth, edge_pixels }, color);
+			break;
+		default:
+			throw std::logic_error("Polygon::fill_depth_buffer(): this count of polygon points is not allowed yet");
+			break;
 		}
 		fill_edges(z_buffer, WHITE);
+	}
+
+	void Polygon::fill_area(DepthBuffer * z_buffer, PolygonArea area, int color) {
+		for (const auto & pixel : area.second) {
+			Point curr(pixel.x(), pixel.y(), pixel.depth());
+			auto inner_pixels = collect_pixels(area.first, curr);
+			fill_line(z_buffer, inner_pixels, color);
+			inner_pixels.erase(inner_pixels.begin(), inner_pixels.end());
+		}
 	}
 
 	void Polygon::fill_edges(DepthBuffer * z_buffer, int color) {
@@ -127,24 +130,26 @@ namespace tua {
 		const auto & first = points[0];
 		const auto & last = points[points.size() - 1];
 
-		const auto edge = std::move(collect_pixels(first, last));
-		fill_pixels(z_buffer, edge, color);
+		const auto edge = collect_pixels(first, last);
+		fill_line(z_buffer, edge, color);
 
 		for (size_t i = 0; i < points.size() - 1; ++i) {
 			const auto & pt0 = points[i];
 			const auto & pt1 = points[i + 1];
-			const auto edge = std::move(collect_pixels(pt0, pt1));
-			fill_pixels(z_buffer, edge, color);
+			const auto edge = collect_pixels(pt0, pt1);
+			fill_line(z_buffer, edge, color);
 		}
 	}
 
-	void Polygon::fill_pixels(DepthBuffer * z_buffer, const std::vector<Pixel>& pixels, int color) {
+	void Polygon::fill_line(DepthBuffer * z_buffer, const std::vector<Pixel>& pixels, int color) {
 		for (const auto & pixel : pixels) {
 			int x = pixel.x(), y = pixel.y(), z = pixel.depth();
-			if (x >= z_buffer->width() || x < 0)
+			if (x >= z_buffer->width() || x < 0) {
 				continue;
-			if (y >= z_buffer->height() || y < 0)
+			}
+			if (y >= z_buffer->height() || y < 0) {
 				continue;
+			}
 			if (z >= (*z_buffer)(x, y).depth()) {
 				(*z_buffer)(x, y).set_depth(z);
 				(*z_buffer)(x, y).set_color(color);

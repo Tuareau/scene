@@ -17,8 +17,14 @@ namespace tua {
 	private:
 		Matrix * _polygon_matrix;
 
+		enum class PolygonPointsCount { ONE, TWO, THREE, FOUR, NONE };
+		PolygonPointsCount _points_count;
+
 		std::vector<Pixel> collect_pixels(const Point & p1, const Point & p2) const;
-		void fill_pixels(DepthBuffer * z_buffer, const std::vector<Pixel> & pixels, int color);
+		void fill_line(DepthBuffer * z_buffer, const std::vector<Pixel> & pixels, int color);
+
+		using PolygonArea = std::pair<Point, std::vector<Pixel>>;
+		void fill_area(DepthBuffer * z_buffer, PolygonArea area, int color);
 		void fill_edges(DepthBuffer * z_buffer, int color = WHITE);
 
 	public:

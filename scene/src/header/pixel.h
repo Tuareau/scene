@@ -28,9 +28,6 @@ namespace tua {
 		void set_depth(int depth);
 		void set_color(int color);
 
-		//bool operator==(const Pixel & other);
-		//bool operator<(const Pixel & other);
-		//bool operator!=(const Point & other);
 	};
 
 };
