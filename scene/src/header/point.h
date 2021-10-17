@@ -1,10 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <stdexcept>
 
 namespace tua {
-
-	static const size_t POINT_SIZE = 4;
 
 	class Point
 	{
@@ -21,6 +19,8 @@ namespace tua {
 		~Point() = default;
 
 		Point & operator=(const Point & other) = default;
+		
+		static const size_t POINT_SIZE = 4;
 
 		double x() const;
 		double y() const;
@@ -31,7 +31,7 @@ namespace tua {
 		double operator[](size_t idx) const;
 
 		bool operator==(const Point & other);
-		//bool operator!=(const Point & other);
+		bool operator!=(const Point & other);
 	};
 
 };

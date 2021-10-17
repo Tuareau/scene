@@ -21,6 +21,7 @@
     <ClInclude Include="scene\src\header\bounds.h" />
     <ClInclude Include="scene\src\header\depthbuffer.h" />
     <ClInclude Include="scene\src\header\figure.h" />
+    <ClInclude Include="scene\src\header\keyboardlistener.h" />
     <ClInclude Include="scene\src\header\matrix.h" />
     <ClInclude Include="scene\src\header\parallelepiped.h" />
     <ClInclude Include="scene\src\header\pixel.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="scene\src\source\bgi.cxx" />
     <ClCompile Include="scene\src\source\depthbuffer.cpp" />
     <ClCompile Include="scene\src\source\figure.cpp" />
+    <ClCompile Include="scene\src\source\keyboardlistener.cpp" />
     <ClCompile Include="scene\src\source\matrix.cpp" />
     <ClCompile Include="scene\src\source\parallelepiped.cpp" />
     <ClCompile Include="scene\src\source\pixel.cpp" />

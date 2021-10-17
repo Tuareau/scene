@@ -15,5 +15,7 @@ namespace tua {
 		TriangularPyramid(std::vector<Polygon> & polygons, int color);
 		TriangularPyramid(Point base, size_t length, int color);
 		~TriangularPyramid() = default;
+
+		Figure::FigureType type() const override;
 	};
 }

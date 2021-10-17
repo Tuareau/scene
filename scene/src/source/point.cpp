@@ -15,15 +15,20 @@ namespace tua {
 	double & Point::operator[](size_t idx) {
 		switch (idx) {
 		case 0:
-			return _x; break;
+			return _x; 
+			break;
 		case 1:
-			return _y; break;
+			return _y; 
+			break;
 		case 2:
-			return _z; break;
+			return _z; 
+			break;
 		case 3:
-			return _delta; break;
+			return _delta; 
+			break;
 		default:
-			throw "inv idx";
+			throw std::invalid_argument("Point::operator[]: invalid index");
+			break;
 		}
 	}
 
@@ -31,15 +36,20 @@ namespace tua {
 	{
 		switch (idx) {
 		case 0:
-			return _x; break;
+			return _x; 
+			break;
 		case 1:
-			return _y; break;
+			return _y; 
+			break;
 		case 2:
-			return _z; break;
+			return _z; 
+			break;
 		case 3:
-			return _delta; break;
+			return _delta; 
+			break;
 		default:
-			throw "inv idx";
+			throw std::invalid_argument("Point::operator[]: invalid index");
+			break;
 		}
 	}
 
@@ -48,7 +58,7 @@ namespace tua {
 			(_y == other._y) &&	(_z == other._z);
 	}
 
-	//bool Point::operator!=(const Point & other) {
-	//	return !(*this == other);
-	//}
+	bool Point::operator!=(const Point & other) {
+		return !(*this == other);
+	}
 };

@@ -16,7 +16,7 @@ namespace tua {
 
 	public:
 		Matrix() = default;
-		Matrix(const std::vector<Point> & points);
+		explicit Matrix(const std::vector<Point> & points);
 		Matrix(const Matrix & other) = default;
 		~Matrix() = default;
 
@@ -43,6 +43,10 @@ namespace tua {
 	Matrix * make_rotate_z_transform(const Point & base, double angle);
 
 	// Matrix * make_coordinates_x_transform(double angle);
-	Matrix * make_coordinates_y_transform(bool is_inverse, double angle);
+	Matrix * make_coordinates_y_transform(double angle);
 	// Matrix * make_coordinates_z_transform(double angle);
+
+	// Matrix * make_coordinates_x_reverse_transform(double angle);
+	Matrix * make_coordinates_y_reverse_transform(double angle);
+	// Matrix * make_coordinates_z_reverse_transform(double angle);
 }

@@ -26,14 +26,19 @@ namespace tua {
 		Figure() = default;
 		Figure(std::vector<Polygon> & polygons, int color);
 		explicit Figure(int color);
-		~Figure() = default;
+		virtual ~Figure() = default;
 
 		void displace(Sides side, double step);
 		void scale(double coef);
 		void spin(Axes axis, double angle);
 
 		Bounds bounds() const;
+		int color() const;
 		void fill_depth_buffer(DepthBuffer * z_buffer);
+
+		static const size_t FIGURES = 2;
+		enum class FigureType { PARALLELEPIPED, TRIANGULAR_PYRAMID, NONE };
+		virtual FigureType type() const = 0;
 	};
 }
 

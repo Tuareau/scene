@@ -27,19 +27,7 @@ namespace tua {
 		_polygons.emplace_back(pts3);
 	}
 
-	//void TriangularPyramid::set_polygons_visibility() {
-	//	//auto less_aver_point_depth{
-	//	//	[](const auto & polygon0, const auto & polygon1) {
-	//	//		return polygon0.average_point().z() < polygon1.average_point().z();
-	//	//	}
-	//	//};
-	//	//std::sort(_polygons.begin(), _polygons.end(), less_aver_point_depth);
-	//	//const auto half = _polygons.size() / 2;
-	//	//for (size_t i = 0; i < _polygons.size(); ++i) {
-	//	//	if (i < half)
-	//	//		_polygons[i].set_visibility(false);
-	//	//	else
-	//	//		_polygons[i].set_visibility(true);
-	//	//}
-	//}
+	Figure::FigureType TriangularPyramid::type() const {
+		return Figure::FigureType::TRIANGULAR_PYRAMID;
+	}
 }

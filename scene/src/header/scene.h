@@ -5,14 +5,15 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <vector>
+#include <array>
 
 #include "figure.h"
-#include "parallelepiped.h"
-#include "triangularpyramid.h"
 #include "depthbuffer.h"
+#include "keyboardlistener.h"
 
-#define ESC 27
+#define MOVE_STEP 8.0
+#define ANGLE_STEP 10.0
+#define SCALE_STEP 0.1
 
 //enum colors {
 //	BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
@@ -22,19 +23,22 @@
 namespace tua {
 
 	struct Parameters {
-		double distance;
-		double alpha;
-		double scale;
+		double move_step;
+		double angle_step;
+		double scale_step;
 	};
 
 	class Scene
 	{
 	private:
-		std::vector<Figure *> _figures;
-		const static size_t _objects_max_count = 2;
-		Parameters _parameters = { 8.0, 10.0, 0.1 };
+		std::array<Figure *, Figure::FIGURES> _figures;
+		Parameters _parameters;
 
 		DepthBuffer * _buffer;
+		KeyboardListener _keyboard_listener;
+
+		enum class SceneState { STILL, CHANGED };
+		SceneState _state = SceneState::STILL;
 
 		void draw() const;
 		void update_buffer();
@@ -46,7 +50,7 @@ namespace tua {
 		~Scene();
 
 		void add_figure(Figure * figure);
-		void set_objects_movement(double distance, double alpha, double scale);
+		void remove_figure(Figure::FigureType type);
 		//void rotate_axes();
 
 		void run();

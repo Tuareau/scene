@@ -23,7 +23,7 @@ namespace tua {
 
 	public:
 		Polygon();
-		Polygon(const std::vector<Point> & points);
+		explicit Polygon(const std::vector<Point> & points);
 		Polygon(const Polygon & other);
 		Polygon(Polygon && other) noexcept;
 		~Polygon();

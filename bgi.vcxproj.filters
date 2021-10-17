@@ -69,6 +69,9 @@
     <ClInclude Include="scene\src\header\bounds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scene\src\header\keyboardlistener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\src\source\bgi.cxx">
@@ -132,6 +135,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scene\bgi\source\winthread.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\src\source\keyboardlistener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

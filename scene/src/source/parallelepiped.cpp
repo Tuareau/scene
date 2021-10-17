@@ -30,5 +30,9 @@ namespace tua {
 		_polygons.emplace_back(pts4);
 		_polygons.emplace_back(pts5);
 	}
+
+	Figure::FigureType Parallelepiped::type() const {
+		return Figure::FigureType::PARALLELEPIPED;
+	}
 	
 }
