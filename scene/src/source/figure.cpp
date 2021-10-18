@@ -71,7 +71,7 @@ namespace tua {
 		};
 	}
 
-	void Figure::fill_depth_buffer(DepthBuffer * z_buffer)	{
+	void Figure::fill_depth_buffer(DepthBuffer * z_buffer) {
 		for (auto & pol : _polygons) {
 			pol.fill_depth_buffer(z_buffer, _color);
 		}

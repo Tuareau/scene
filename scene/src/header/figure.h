@@ -41,4 +41,3 @@ namespace tua {
 		virtual FigureType type() const = 0;
 	};
 }
-

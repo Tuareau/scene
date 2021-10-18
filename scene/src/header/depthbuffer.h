@@ -3,14 +3,17 @@
 #include <vector>
 #include <climits>
 #include <exception>
+#include <map>
 
 #include <iostream>
 
 #include "graphics.h"
 #include "pixel.h"
 #include "bounds.h"
+#include "figure.h"
 
 using std::vector;
+using std::map;
 
 namespace tua {
 
@@ -22,13 +25,15 @@ namespace tua {
 	class DepthBuffer
 	{
 	private:
+		using MarkedBounds = std::pair<Figure::FigureType, Bounds>;
+
 		vector<vector<Pixel>> _buffer;
-		vector<Bounds> _used_bounds;
+		map<size_t, MarkedBounds> _active_bounds;
 		Size _size;
 		int _base_color;
 
-		Bounds transform_bound(const Bounds & bound);
-		void add_bound(const Bounds & bound);
+		MarkedBounds transform_figure_bounds(const Bounds & bound, Figure::FigureType type);
+		void add_marked_bounds(const MarkedBounds & marked_bound, Figure::FigureType type);
 
 	public:
 		DepthBuffer() = delete;
@@ -41,7 +46,7 @@ namespace tua {
 		size_t height() const;
 
 		void clear();
-		void draw(const Bounds & bound);
+		void draw_figure(const Figure * figure);
 
 	};
 

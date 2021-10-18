@@ -63,8 +63,8 @@ namespace tua {
 
 	void Scene::draw() const {
 		clearviewport();
-		for (const auto & figure : _figures) {
-			_buffer->draw(figure->bounds());
+		for (const auto * figure : _figures) {
+			_buffer->draw_figure(figure);
 		}
 	}
 
