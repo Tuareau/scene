@@ -4,7 +4,7 @@ namespace tua {
 
 	Scene::Scene(const std::string & title, size_t width, size_t height) {
 		initwindow(width, height, title.c_str());
-		_buffer = new DepthBuffer(width, height, BLACK);
+		_buffer = new DepthBuffer(width, height, Color::BLACK);
 		for (size_t i = 0; i < Figure::FIGURES; ++i) {
 			_figures[i] = nullptr;
 		}
@@ -39,29 +39,30 @@ namespace tua {
 
 	void Scene::show_instruction() const {
 		using std::cout;
-		cout << std::setw(40) << "\nThe instruction of using\n";
+		const auto indent { std::setw(40) };
+		cout << indent << "\nThe instruction of using\n";
 		for (const auto & figure : _figures) {
 			switch (figure->type()) {
 			case Figure::FigureType::PARALLELEPIPED:
-				cout << std::setw(40) << "\nPARALLELEPIPED\n";
-				cout << std::setw(40) << "Move: A, S, D, W, R, T\n";
-				cout << std::setw(40) << "Rotate: (Z, X), (C, V), (F, G)\n";
-				cout << std::setw(40) << "Scale: Q, E\n";
+				cout << indent << "\nPARALLELEPIPED\n";
+				cout << indent << "Move: A, S, D, W, R, T\n";
+				cout << indent << "Rotate: (Z, X), (C, V), (F, G)\n";
+				cout << indent << "Scale: Q, E\n";
 				break;
 			case Figure::FigureType::TRIANGULAR_PYRAMID:
-				cout << std::setw(40) << "\nTRIANGULAR PYRAMID\n";
-				cout << std::setw(40) << "Move: I, J, K, L, 9, 0\n";
-				cout << std::setw(40) << "Rotate: (B, N), (M, P), (Y, H)\n";
-				cout << std::setw(40) << "Scale: U, O\n";
+				cout << indent << "\nTRIANGULAR PYRAMID\n";
+				cout << indent << "Move: I, J, K, L, 9, 0\n";
+				cout << indent << "Rotate: (B, N), (M, P), (Y, H)\n";
+				cout << indent << "Scale: U, O\n";
 				break;
 			default:
 				break;
 			}
 		}
-		cout << std::setw(40) << "Press ESC to quit\n" << std::endl;
+		cout << indent << "Press ESC to quit\n" << std::endl;
 	}
 
-	void Scene::draw() const {
+	void Scene::draw_buffer() const {
 		clearviewport();
 		for (const auto * figure : _figures) {
 			_buffer->draw_figure(figure);
@@ -75,17 +76,25 @@ namespace tua {
 		}
 	}
 
+	Figure * Scene::find_figure(Figure::FigureType type) {
+		const auto idx = static_cast<size_t>(type);
+		if (idx >= Figure::FIGURES) {
+			return nullptr;
+		}
+		else {
+			return _figures[idx];
+		}
+	}
+
 	void Scene::run() {
 		show_instruction();
-		const auto idx0 = size_t(Figure::FigureType::PARALLELEPIPED);
-		const auto idx1 = size_t(Figure::FigureType::TRIANGULAR_PYRAMID);
-		auto figure0 = _figures[idx0];
-		auto figure1 = _figures[idx1];
+		auto parallelepiped = find_figure(Figure::FigureType::PARALLELEPIPED);
+		auto pyramid = find_figure(Figure::FigureType::TRIANGULAR_PYRAMID);
 		_state = SceneState::CHANGED;
 		while (true) {
 			if (_state == SceneState::CHANGED) {
 				update_buffer();
-				draw();
+				draw_buffer();
 				_state = SceneState::STILL;
 			}
 
@@ -94,55 +103,55 @@ namespace tua {
 				key < KeyboardListener::Key::NONE) {
 				_state = SceneState::CHANGED;
 			}
-			if (figure0) {
+			if (parallelepiped) {
 				switch (key) {
 				case KeyboardListener::Key::ESC:
 					return;
 					break;
 				case KeyboardListener::Key::A:
-					figure0->displace(Sides::LEFT, _parameters.move_step);
+					parallelepiped->displace(Sides::LEFT, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::S:
-					figure0->displace(Sides::DOWN, _parameters.move_step);
+					parallelepiped->displace(Sides::DOWN, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::D:
-					figure0->displace(Sides::RIGHT, _parameters.move_step);
+					parallelepiped->displace(Sides::RIGHT, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::W:
-					figure0->displace(Sides::UP, _parameters.move_step);
+					parallelepiped->displace(Sides::UP, _parameters.move_step);
 					break;
 
 				case KeyboardListener::Key::Q:
-					figure0->scale(1.0 - _parameters.scale_step);
+					parallelepiped->scale(1.0 - _parameters.scale_step);
 					break;
 				case KeyboardListener::Key::E:
-					figure0->scale(1.0 + _parameters.scale_step);
+					parallelepiped->scale(1.0 + _parameters.scale_step);
 					break;
 
 				case KeyboardListener::Key::Z:
-					figure0->spin(Axes::X, -_parameters.angle_step);
+					parallelepiped->spin(Axes::X, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::X:
-					figure0->spin(Axes::X, _parameters.angle_step);
+					parallelepiped->spin(Axes::X, _parameters.angle_step);
 					break;
 				case KeyboardListener::Key::C:
-					figure0->spin(Axes::Y, -_parameters.angle_step);
+					parallelepiped->spin(Axes::Y, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::V:
-					figure0->spin(Axes::Y, _parameters.angle_step);
+					parallelepiped->spin(Axes::Y, _parameters.angle_step);
 					break;
 				case KeyboardListener::Key::F:
-					figure0->spin(Axes::Z, -_parameters.angle_step);
+					parallelepiped->spin(Axes::Z, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::G:
-					figure0->spin(Axes::Z, _parameters.angle_step);
+					parallelepiped->spin(Axes::Z, _parameters.angle_step);
 					break;
 
 				case KeyboardListener::Key::R:
-					figure0->displace(Sides::CLOSER, _parameters.move_step);
+					parallelepiped->displace(Sides::CLOSER, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::T:
-					figure0->displace(Sides::FURTHER, _parameters.move_step);
+					parallelepiped->displace(Sides::FURTHER, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::NONE:
 					break;
@@ -151,51 +160,51 @@ namespace tua {
 				}
 			}
 
-			if (figure1) {
+			if (pyramid) {
 				switch (key) {
 				case KeyboardListener::Key::J:
-					figure1->displace(Sides::LEFT, _parameters.move_step);
+					pyramid->displace(Sides::LEFT, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::K:
-					figure1->displace(Sides::DOWN, _parameters.move_step);
+					pyramid->displace(Sides::DOWN, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::L:
-					figure1->displace(Sides::RIGHT, _parameters.move_step);
+					pyramid->displace(Sides::RIGHT, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::I:
-					figure1->displace(Sides::UP, _parameters.move_step);
+					pyramid->displace(Sides::UP, _parameters.move_step);
 					break;
 
 				case KeyboardListener::Key::U:
-					figure1->scale(1.0 - _parameters.scale_step);
+					pyramid->scale(1.0 - _parameters.scale_step);
 					break;
 				case KeyboardListener::Key::O:
-					figure1->scale(1.0 + _parameters.scale_step);
+					pyramid->scale(1.0 + _parameters.scale_step);
 					break;
 
 				case KeyboardListener::Key::B:
-					figure1->spin(Axes::X, -_parameters.angle_step);
+					pyramid->spin(Axes::X, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::N:
-					figure1->spin(Axes::X, _parameters.angle_step);
+					pyramid->spin(Axes::X, _parameters.angle_step);
 					break;
 				case KeyboardListener::Key::M:
-					figure1->spin(Axes::Y, -_parameters.angle_step);
+					pyramid->spin(Axes::Y, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::P:
-					figure1->spin(Axes::Y, _parameters.angle_step);
+					pyramid->spin(Axes::Y, _parameters.angle_step);
 					break;
 				case KeyboardListener::Key::Y:
-					figure1->spin(Axes::Z, -_parameters.angle_step);
+					pyramid->spin(Axes::Z, -_parameters.angle_step);
 					break;
 				case KeyboardListener::Key::H:
-					figure1->spin(Axes::Z, _parameters.angle_step);
+					pyramid->spin(Axes::Z, _parameters.angle_step);
 					break;
 				case KeyboardListener::Key::K9:
-					figure1->displace(Sides::CLOSER, _parameters.move_step);
+					pyramid->displace(Sides::CLOSER, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::K0:
-					figure1->displace(Sides::FURTHER, _parameters.move_step);
+					pyramid->displace(Sides::FURTHER, _parameters.move_step);
 					break;
 				case KeyboardListener::Key::NONE:
 					break;

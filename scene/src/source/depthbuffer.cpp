@@ -2,17 +2,17 @@
 
 namespace tua {
 
-	DepthBuffer::DepthBuffer(size_t width, size_t height, int base_color) 
-		: _base_color(base_color) 
-	{
+	DepthBuffer::DepthBuffer(size_t width, size_t height, Color base_color) {
+		_base_color = base_color;
 		_size.width = width;
 		_size.height = height;
 		_buffer.reserve(width);
 		for (size_t x = 0; x < width; ++x) {
 			std::vector<Pixel> pixels;
 			pixels.reserve(height);
-			for (size_t y = 0; y < height; ++y)
-				pixels.emplace_back(x, y, INT_MIN, base_color);
+			for (size_t y = 0; y < height; ++y) {
+				pixels.emplace_back(x, y, std::numeric_limits<int>::min, base_color);
+			}
 			_buffer.push_back(std::move(pixels));
 		}
 	}
@@ -29,8 +29,10 @@ namespace tua {
 	size_t DepthBuffer::height() const { return _size.height; }
 
 	void DepthBuffer::clear() {
-		for (const auto & rect : _active_bounds) {
-			const auto & [pixel, width, height] = rect;
+		for (const auto & marked_bound : _active_bounds) {
+			Bounds bound;
+			std::tie(std::ignore, bound) = marked_bound;
+			const auto & [pixel, width, height] = bound.as_touple();
 			for (size_t x = pixel.x(); x < pixel.x() + width; ++x) {
 				std::vector<Pixel> & pixels = _buffer[x];
 				for (size_t y = pixel.y(); y < pixel.y() + height; ++y) {
@@ -39,7 +41,6 @@ namespace tua {
 				}
 			}
 		}
-		_used_bounds.erase(_used_bounds.begin(), _used_bounds.end());
 	}
 
 	void DepthBuffer::draw_figure(const Figure * figure) {
@@ -47,17 +48,24 @@ namespace tua {
 			transform_figure_bounds(figure->bounds(), figure->type())
 		};
 		if (marked_bounds.first != Figure::FigureType::NONE) {
-			const auto figure_type = static_cast<size_t>(figure->type());
-			_active_bounds[figure_type] = marked_bounds;
+			const auto index = to_index(figure->type());
+			_active_bounds[index] = marked_bounds;
+			draw_bound(figure->type());
 		}
+	}
 
+	void DepthBuffer::draw_bound(Figure::FigureType type) const {
+		const auto index = to_index(type);
+		const auto & marked_bound = _active_bounds[index];
 
-		//transform_and_add_bound(bound);
-		//const auto & [pixel, width, height] = _used_bounds.back();
-		//for (size_t x = pixel.x(); x < pixel.x() + width; ++x) {
-		//	for (size_t y = pixel.y(); y < pixel.y() + height; ++y)
-		//		putpixel(x, y, _buffer[x][y].color());
-		//}
+		Bounds bound;
+		std::tie(std::ignore, bound) = marked_bound;
+		const auto & [pixel, width, height] = bound;
+		for (size_t x = pixel.x(); x < pixel.x() + width; ++x) {
+			for (size_t y = pixel.y(); y < pixel.y() + height; ++y) {
+				putpixel(x, y, _buffer[x][y].color());
+			}
+		}
 	}
 
 	DepthBuffer::MarkedBounds DepthBuffer::transform_figure_bounds(const Bounds & bound, Figure::FigureType type) {

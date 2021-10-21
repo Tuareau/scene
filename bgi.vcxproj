@@ -19,6 +19,7 @@
     <ClInclude Include="scene\bgi\header\winbgitypes.h" />
     <ClInclude Include="scene\src\header\axes.h" />
     <ClInclude Include="scene\src\header\bounds.h" />
+    <ClInclude Include="scene\src\header\color.h" />
     <ClInclude Include="scene\src\header\depthbuffer.h" />
     <ClInclude Include="scene\src\header\figure.h" />
     <ClInclude Include="scene\src\header\keyboardlistener.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="scene\src\header\polygon.h" />
     <ClInclude Include="scene\src\header\scene.h" />
     <ClInclude Include="scene\src\header\sides.h" />
+    <ClInclude Include="scene\src\header\size.h" />
     <ClInclude Include="scene\src\header\triangularpyramid.h" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +46,7 @@
     <ClCompile Include="scene\bgi\source\winbgi.cxx" />
     <ClCompile Include="scene\bgi\source\winthread.cxx" />
     <ClCompile Include="scene\src\source\bgi.cxx" />
+    <ClCompile Include="scene\src\source\bounds.cpp" />
     <ClCompile Include="scene\src\source\depthbuffer.cpp" />
     <ClCompile Include="scene\src\source\figure.cpp" />
     <ClCompile Include="scene\src\source\keyboardlistener.cpp" />

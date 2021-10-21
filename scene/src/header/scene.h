@@ -10,15 +10,11 @@
 #include "figure.h"
 #include "depthbuffer.h"
 #include "keyboardlistener.h"
+#include "color.h"
 
 #define MOVE_STEP 8.0
 #define ANGLE_STEP 10.0
 #define SCALE_STEP 0.1
-
-//enum colors {
-//	BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
-//	LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE
-//};
 
 namespace tua {
 
@@ -40,9 +36,11 @@ namespace tua {
 		enum class SceneState { STILL, CHANGED };
 		SceneState _state = SceneState::STILL;
 
-		void draw() const;
+		void draw_buffer() const;
 		void update_buffer();
 		void show_instruction() const;
+
+		Figure * find_figure(Figure::FigureType type);
 
 	public:
 		Scene(const std::string & title, size_t width = 960, size_t height = 540);
