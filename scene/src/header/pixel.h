@@ -1,32 +1,42 @@
 #pragma once
 
+#include <vector>
+
 #include "graphics.h"
 
+#include "figure.h"
+#include "color.h"
+
 namespace tua {
+
+	struct Depth {
+		int z;
+		Figure::FigureType object_type;
+		Color color;
+	};
 
 	class Pixel
 	{
 	private:
-		int _x;
-		int _y;
-		int _depth;
-		int _color;
+		size_t _x;
+		size_t _y;
+		std::vector<Depth> _depths;
 
 	public:
-		Pixel();
+		Pixel() = delete;
 		Pixel(const Pixel & other) = default;
-		Pixel(int x, int y, int depth, int color = WHITE);
+		Pixel(size_t x, size_t y);
 		~Pixel() = default;
 
 		Pixel & operator=(const Pixel & other) = default;
 
-		int x() const;
-		int y() const;
-		int depth() const;
-		int color() const;
+		size_t x() const;
+		size_t y() const;
 
-		void set_depth(int depth);
-		void set_color(int color);
+		void push_depth(const Depth & depth);
+
+
+
 
 	};
 

@@ -27,20 +27,17 @@ namespace tua {
 	class Scene
 	{
 	private:
-		std::array<Figure *, Figure::FIGURES> _figures;
+		using FiguresArray = std::array<MovableFigure, Figure::FIGURES>;
+		FiguresArray _figures;
 		Parameters _parameters;
 
 		DepthBuffer * _buffer;
 		KeyboardListener _keyboard_listener;
 
-		enum class SceneState { STILL, CHANGED };
-		SceneState _state = SceneState::STILL;
-
 		void draw_buffer() const;
 		void update_buffer();
+		void apply_changes();
 		void show_instruction() const;
-
-		Figure * find_figure(Figure::FigureType type);
 
 	public:
 		Scene(const std::string & title, size_t width = 960, size_t height = 540);
@@ -52,6 +49,31 @@ namespace tua {
 		//void rotate_axes();
 
 		void run();
+	};
+
+	class MovableFigure
+	{
+	public:
+		enum class MoveState { STILL, MOVED };
+	private:
+		Figure * _figure;
+		MoveState _state;
+	public:
+		MovableFigure() : _figure(nullptr), _state(MoveState::STILL) {}
+		explicit MovableFigure(Figure * figure, MoveState state = MoveState::STILL) 
+			: _figure(figure), _state(state) {}
+		MovableFigure(const MovableFigure & other) = default;
+
+		bool exist() const { return !_figure; }
+
+		Figure * figure() { return _figure; }
+		const Figure * figure() const { return _figure; }
+
+		Figure::FigureType type() const { return _figure->type(); }
+
+		void change_state(MoveState state) { _state = state; }
+		MoveState state() const { return _state; }
+		void reset_state() { _state = MoveState::STILL; }
 	};
 
 }

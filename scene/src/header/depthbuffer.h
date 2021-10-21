@@ -23,16 +23,14 @@ namespace tua {
 	class DepthBuffer
 	{
 	private:
-		using MarkedBounds = std::pair<Figure::FigureType, Bounds>;
-
 		vector<vector<Pixel>> _buffer;
-		array<MarkedBounds, Figure::FIGURES> _active_bounds;
+		array<Bounds, Figure::FIGURES> _active_bounds;
 		Size _size;
 		Color _base_color;
 
-		MarkedBounds transform_figure_bounds(const Bounds & bound, Figure::FigureType type);
-		void add_marked_bounds(const MarkedBounds & marked_bound, Figure::FigureType type);
-		void draw_bound(Figure::FigureType type) const;
+		//Bounds transform_figure_bounds(const Bounds & bound, Figure::FigureType type);
+		//void add_marked_bounds(const MarkedBounds & marked_bound, Figure::FigureType type);
+		//void draw_bound(Figure::FigureType type) const;
 
 	public:
 		DepthBuffer() = delete;
@@ -44,8 +42,8 @@ namespace tua {
 		size_t width() const;
 		size_t height() const;
 
-		void clear();
-		void draw_figure(const Figure * figure);
+		//void clear();
+		//void draw_figure(const Figure * figure);
 
 	};
 

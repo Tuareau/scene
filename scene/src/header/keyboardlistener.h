@@ -16,17 +16,22 @@ namespace tua {
 		~KeyboardListener() = default;
 
 		enum class Key {
+			FIGURE1,
 			A, S, D, W, R, T,
-			J, K, L, I, K9, K0,
 			Q, E,
-			U, O,
 			Z, X,
 			C, V, 
 			F, G,
+
+			FIGURE2,
+			J, K, L, I, K9, K0,
+			U, O,
 			Y, H,
 			B, N,
 			M, P,
-			ESC, NONE,
+
+			ESC, 
+			NONE,
 		};
 
 		Key get_active_key() const;
