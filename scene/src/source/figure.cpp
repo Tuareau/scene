@@ -1,13 +1,16 @@
 #include "figure.h"
+#include "bounds.h"
+#include "depthbuffer.h"
+#include "polygon.h"
 
 namespace tua {
 
-	Figure::Figure(std::vector<Polygon> & polygons, int color)
+	Figure::Figure(std::vector<Polygon> & polygons, Color color)
 		: _polygons(polygons), _color(color) {}
 
-	Figure::Figure(int color) : _color(color) {}
+	Figure::Figure(Color color) : _color(color) {}
 
-	int Figure::color() const {
+	Color Figure::color() const {
 		return _color;
 	}
 
@@ -56,7 +59,7 @@ namespace tua {
 		double x_min = first_pt.x(), y_min = first_pt.y();
 		double x_max = first_pt.x(), y_max = first_pt.y();
 		for (const auto & polygon : _polygons) {
-			const std::vector<Point> & pts = polygon.points();
+			const auto & pts = polygon.points();
 			for (const auto & pt : pts) {
 				if (x_min > pt.x()) x_min = pt.x();
 				if (y_min > pt.y()) y_min = pt.y();
@@ -64,16 +67,24 @@ namespace tua {
 				if (y_max < pt.y()) y_max = pt.y();
 			}
 		}
-		return Bounds {
-			std::make_tuple(Pixel(int(round(x_min)), int(round(y_min)), 0),
-			size_t(round(x_max - x_min)),
-			size_t(round(y_max - y_min)))
+		auto width = static_cast<int>(round(x_max - x_min));
+		auto height = static_cast<int>(round(y_max - y_min));
+		Vec2 base = { 
+			static_cast<int>(round(x_min)), 
+			static_cast<int>(round(y_min)),
 		};
+		return Bounds(base, width, height);
 	}
 
 	void Figure::fill_depth_buffer(DepthBuffer * z_buffer) {
 		for (auto & pol : _polygons) {
-			pol.fill_depth_buffer(z_buffer, _color);
+			pol.fill_depth_buffer(z_buffer);
+		}
+	}
+
+	void Figure::clear_depth_buffer(DepthBuffer * z_buffer) {
+		for (auto & pol : _polygons) {
+			pol.clear_depth_buffer(z_buffer);
 		}
 	}
 }

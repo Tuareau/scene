@@ -2,6 +2,7 @@
 #include "parallelepiped.h"
 #include "triangularpyramid.h"
 #include "scene.h"
+#include "color.h"
 
 int main(int argc, char* argv[])
 {
@@ -11,9 +12,9 @@ int main(int argc, char* argv[])
 	using tua::Scene;
 
 	Point base0(100, 100, 100);
-	Parallelepiped * par = new Parallelepiped(base0, 60, 30, 30, CYAN);
+	Parallelepiped * par = new Parallelepiped(base0, 60, 30, 30, Color::CYAN);
 	Point base1(100, 100, 100);
-	TriangularPyramid * pyr = new TriangularPyramid(base1, 60, MAGENTA);
+	TriangularPyramid * pyr = new TriangularPyramid(base1, 60, Color::MAGENTA);
 
 	Scene scene("SCENE");
 	scene.add_figure(par);

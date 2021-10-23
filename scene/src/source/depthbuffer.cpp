@@ -1,4 +1,5 @@
 #include "depthbuffer.h"
+#include "bounds.h"
 
 namespace tua {
 
@@ -28,86 +29,79 @@ namespace tua {
 
 	size_t DepthBuffer::height() const { return _size.height; }
 
-	//void DepthBuffer::clear() {
-	//	for (const auto & marked_bound : _active_bounds) {
-	//		Bounds bound;
-	//		std::tie(std::ignore, bound) = marked_bound;
-	//		const auto & [pixel, width, height] = bound.as_touple();
-	//		for (size_t x = pixel.x(); x < pixel.x() + width; ++x) {
-	//			std::vector<Pixel> & pixels = _buffer[x];
-	//			for (size_t y = pixel.y(); y < pixel.y() + height; ++y) {
-	//				pixels[y].set_color(_base_color);
-	//				pixels[y].set_depth(INT_MIN);
-	//			}
-	//		}
-	//	}
-	//}
+	void DepthBuffer::clear_figure(Figure::FigureType type) {
+		const auto idx = to_index(type);
+		auto & bounds = _active_bounds[idx];
 
-	//void DepthBuffer::draw_figure(const Figure * figure) {
-	//	const auto marked_bounds {
-	//		transform_figure_bounds(figure->bounds(), figure->type())
-	//	};
-	//	if (marked_bounds.first != Figure::FigureType::NONE) {
-	//		const auto index = to_index(figure->type());
-	//		_active_bounds[index] = marked_bounds;
-	//		draw_bound(figure->type());
-	//	}
-	//}
+		const auto & [pixel, width, height] = bounds.as_touple();
+		for (size_t x = pixel.x; x < pixel.x + width; ++x) {
+			for (size_t y = pixel.y; y < pixel.y + height; ++y) {
+				_buffer[x][y].erase_depths(type);
+			}
+		}
+	}
 
-	//void DepthBuffer::draw_bound(Figure::FigureType type) const {
-	//	const auto index = to_index(type);
-	//	const auto & marked_bound = _active_bounds[index];
+	void DepthBuffer::draw_figure(const MovableFigure & figure) {
+		const auto transformed_bounds {
+			transform_figure_bounds(figure.bounds())
+		};
+		const auto index = to_index(figure.type());
+		_active_bounds[index] = transformed_bounds;
+		draw_bound(transformed_bounds);
+	}
 
-	//	Bounds bound;
-	//	std::tie(std::ignore, bound) = marked_bound;
-	//	const auto & [pixel, width, height] = bound;
-	//	for (size_t x = pixel.x(); x < pixel.x() + width; ++x) {
-	//		for (size_t y = pixel.y(); y < pixel.y() + height; ++y) {
-	//			putpixel(x, y, _buffer[x][y].color());
-	//		}
-	//	}
-	//}
+	void DepthBuffer::draw_bound(const Bounds & bound) const {
+		const auto & [pixel, width, height] = bound.as_touple();
+		for (size_t x = pixel.x; x < pixel.x + width; ++x) {
+			for (size_t y = pixel.y; y < pixel.y + height; ++y) {
+				int color_code = static_cast<int>(_buffer[x][y].nearest_color());
+				putpixel(x, y, color_code);
+			}
+		}
+	}
 
-	//DepthBuffer::MarkedBounds DepthBuffer::transform_figure_bounds(const Bounds & bound, Figure::FigureType type) {
-	//	const auto & [pixel, width, height] = bound;
-	//	int base_x = pixel.x();
-	//	int base_y = pixel.y();
+	Bounds DepthBuffer::transform_figure_bounds(const Bounds & bound) {
+		const auto & [pixel, width, height] = bound.as_touple();
+		int base_x = pixel.x;
+		int base_y = pixel.y;
 
-	//	if (base_x >= _size.width || base_y >= _size.height) {
-	//		return { std::make_pair(Figure::FigureType::NONE, Bounds()) };
-	//	}
-	//	if (base_x + width <= 0 || base_y + height <= 0) {
-	//		return { std::make_pair(Figure::FigureType::NONE, Bounds()) };
-	//	}
+		if (base_x >= int(_size.width) || base_y >= int(_size.height)) {
+			return Bounds();
+		}
+		if (base_x + width <= 0 || base_y + height <= 0) {
+			return Bounds();
+		}
 
-	//	auto left_x = base_x;
-	//	auto right_x = base_x + width;
-	//	auto top_y = base_y;
-	//	auto bottom_y = base_y + height;
+		auto left_x = base_x;
+		auto right_x = base_x + width;
+		auto top_y = base_y;
+		auto bottom_y = base_y + height;
 
-	//	if (left_x < 0) {
-	//		left_x = 0;
-	//	}
-	//	if (right_x > _size.width) {
-	//		right_x = _size.width;
-	//	}
+		if (left_x < 0) {
+			left_x = 0;
+		}
+		if (right_x > _size.width) {
+			right_x = _size.width;
+		}
 
-	//	if (top_y < 0) {
-	//		top_y = 0;
-	//	}
-	//	if (bottom_y > _size.height) {
-	//		bottom_y = _size.height;
-	//	}
+		if (top_y < 0) {
+			top_y = 0;
+		}
+		if (bottom_y > _size.height) {
+			bottom_y = _size.height;
+		}
 
-	//	auto transformed_bounds {
-	//		std::make_tuple(Pixel(left_x, top_y, 0), right_x - left_x, bottom_y - top_y)
-	//	};
-	//	return std::make_pair(type, transformed_bounds);
-	//}
+		Vec2 pt = {
+			left_x,
+			top_y,
+		};
+		auto new_width = right_x - left_x;
+		auto new_height = bottom_y - top_y;
+		return Bounds(pt, new_width, new_height);
+	}
 
-	//void DepthBuffer::add_marked_bounds(const MarkedBounds & marked_bound, Figure::FigureType type) {
-	//	const auto index = static_cast<size_t>(type);
-	//	_active_bounds[index] = marked_bound;
-	//}
+	size_t tua::to_index(typename Figure::FigureType type) {
+		return static_cast<size_t>(type);
+	}
 
 }

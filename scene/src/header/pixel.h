@@ -1,17 +1,20 @@
 #pragma once
 
+#ifndef _PIXEL_H_
+#define _PIXEL_H_
+
 #include <vector>
 
 #include "graphics.h"
 
-#include "figure.h"
 #include "color.h"
+#include "figure.h"
 
 namespace tua {
 
 	struct Depth {
 		int z;
-		Figure::FigureType object_type;
+		typename Figure::FigureType object_type;
 		Color color;
 	};
 
@@ -29,15 +32,19 @@ namespace tua {
 		~Pixel() = default;
 
 		Pixel & operator=(const Pixel & other) = default;
+		const Depth & operator[](size_t idx) const;
+		Depth & operator[](size_t idx);
 
 		size_t x() const;
 		size_t y() const;
 
+		Color nearest_color() const;
+
 		void push_depth(const Depth & depth);
-
-
-
+		void erase_depths(Figure::FigureType type);
 
 	};
 
 };
+
+#endif

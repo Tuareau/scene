@@ -3,17 +3,19 @@
 #include <vector>
 #include <cmath>
 
+#include "color.h"
 #include "figure.h"
-#include "polygon.h"
 
 namespace tua {
+
+	class Polygon;
 
 	class TriangularPyramid : public Figure
 	{
 	public:
 		TriangularPyramid() = default;
-		TriangularPyramid(std::vector<Polygon> & polygons, int color);
-		TriangularPyramid(Point base, size_t length, int color);
+		TriangularPyramid(std::vector<Polygon> & polygons, Color color);
+		TriangularPyramid(Point base, size_t length, Color color);
 		~TriangularPyramid() = default;
 
 		Figure::FigureType type() const override;

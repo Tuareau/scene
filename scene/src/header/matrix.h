@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _MATRIX_H_
+#define _MATRIX_H_
+
 #include <vector>
 #include <cmath>
 #include <stdexcept>
@@ -50,3 +53,5 @@ namespace tua {
 	Matrix * make_coordinates_y_reverse_transform(double angle);
 	// Matrix * make_coordinates_z_reverse_transform(double angle);
 }
+
+#endif

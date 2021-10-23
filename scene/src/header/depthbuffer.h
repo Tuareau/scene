@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DEPTHBUFFER_H_
+#define _DEPTHBUFFER_H_
+
 #include <vector>
 #include <limits>
 #include <exception>
@@ -8,17 +11,18 @@
 
 #include <iostream>
 
+#include "figure.h"
 #include "graphics.h"
 #include "pixel.h"
 #include "size.h"
 #include "color.h"
-#include "bounds.h"
-#include "figure.h"
 
 using std::vector;
 using std::array;
 
 namespace tua {
+
+	class Bounds;
 
 	class DepthBuffer
 	{
@@ -28,9 +32,7 @@ namespace tua {
 		Size _size;
 		Color _base_color;
 
-		//Bounds transform_figure_bounds(const Bounds & bound, Figure::FigureType type);
-		//void add_marked_bounds(const MarkedBounds & marked_bound, Figure::FigureType type);
-		//void draw_bound(Figure::FigureType type) const;
+		Bounds transform_figure_bounds(const Bounds & bound);
 
 	public:
 		DepthBuffer() = delete;
@@ -42,13 +44,13 @@ namespace tua {
 		size_t width() const;
 		size_t height() const;
 
-		//void clear();
-		//void draw_figure(const Figure * figure);
-
+		void clear_figure(Figure::FigureType type);
+		void draw_figure(const MovableFigure & figure);
+		void draw_bound(const Bounds & bound) const;
 	};
 
-	size_t to_index(Figure::FigureType type) {
-		return static_cast<size_t>(type);
-	}
+	size_t to_index(Figure::FigureType type);
 
 };
+
+#endif

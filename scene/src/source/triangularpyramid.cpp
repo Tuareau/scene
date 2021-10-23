@@ -1,11 +1,12 @@
 #include "triangularpyramid.h"
+#include "polygon.h"
 
 namespace tua {
 
-	TriangularPyramid::TriangularPyramid(std::vector<Polygon> & polygons, int color)
+	TriangularPyramid::TriangularPyramid(std::vector<Polygon> & polygons, Color color)
 		: Figure(polygons, color) {}
 
-	TriangularPyramid::TriangularPyramid(Point base, size_t length, int color) 
+	TriangularPyramid::TriangularPyramid(Point base, size_t length, Color color) 
 		: Figure(color) {
 		const auto half_length = length / 2;
 		const auto height = std::sqrt(std::pow(length, 2) - std::pow(half_length, 2));
@@ -21,10 +22,10 @@ namespace tua {
 		std::vector<Point> pts2 = { pt0, pt1, pt3 };
 		std::vector<Point> pts3 = { pt1, pt2, pt3 };
 
-		_polygons.emplace_back(pts0);
-		_polygons.emplace_back(pts1);
-		_polygons.emplace_back(pts2);
-		_polygons.emplace_back(pts3);
+		_polygons.emplace_back(pts0, this->type(), color);
+		_polygons.emplace_back(pts1, this->type(), color);
+		_polygons.emplace_back(pts2, this->type(), color);
+		_polygons.emplace_back(pts3, this->type(), color);
 	}
 
 	Figure::FigureType TriangularPyramid::type() const {

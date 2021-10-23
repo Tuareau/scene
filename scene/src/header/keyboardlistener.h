@@ -8,6 +8,8 @@
 
 namespace tua {
 
+	struct MovementParameters;
+
 	class KeyboardListener
 	{
 	public:
@@ -15,26 +17,8 @@ namespace tua {
 		KeyboardListener(const KeyboardListener & other) = delete;
 		~KeyboardListener() = default;
 
-		enum class Key {
-			FIGURE1,
-			A, S, D, W, R, T,
-			Q, E,
-			Z, X,
-			C, V, 
-			F, G,
-
-			FIGURE2,
-			J, K, L, I, K9, K0,
-			U, O,
-			Y, H,
-			B, N,
-			M, P,
-
-			ESC, 
-			NONE,
-		};
-
-		Key get_active_key() const;
+		enum class ProcessStatus { ACTION_DONE, ACTION_MISSED, QUIT };
+		ProcessStatus process_actions(Figure * figure, const MovementParameters & params);
 	};
 
 }
