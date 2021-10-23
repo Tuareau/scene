@@ -32,6 +32,7 @@ namespace tua {
 		Size _size;
 		Color _base_color;
 
+		void draw_bounds(const Bounds & bound) const;
 		Bounds transform_figure_bounds(const Bounds & bound);
 
 	public:
@@ -44,9 +45,9 @@ namespace tua {
 		size_t width() const;
 		size_t height() const;
 
-		void clear_figure(Figure::FigureType type);
-		void draw_figure(const MovableFigure & figure);
-		void draw_bound(const Bounds & bound) const;
+		void clear_figure(MovableFigure & figure);
+		void draw_figure(MovableFigure & figure);
+
 	};
 
 	size_t to_index(Figure::FigureType type);

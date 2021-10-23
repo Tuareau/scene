@@ -4,10 +4,6 @@
 
 namespace tua {
 
-	Polygon::Polygon()
-		: _polygon_matrix(nullptr), 
-		_points_count(PolygonPointsCount::NONE) {}
-
 	Polygon::Polygon(const std::vector<Point> & points, Figure::FigureType type, Color color) {
 		_polygon_matrix = new Matrix(points);
 		_points_count = static_cast<PolygonPointsCount>(_polygon_matrix->size());
@@ -100,10 +96,6 @@ namespace tua {
 		return _polygon_matrix->average_point();
 	}
 
-	void Polygon::clear_depth_buffer(DepthBuffer * z_buffer) {
-
-	}
-
 	void Polygon::fill_depth_buffer(DepthBuffer * z_buffer) {
 		std::vector<Pixel> edge_pixels;
 		const auto & matrix = *_polygon_matrix;
@@ -178,10 +170,10 @@ namespace tua {
 	void Polygon::fill_line(DepthBuffer * z_buffer, const std::vector<Pixel> & pixels) {
 		for (const auto & pixel : pixels) {
 			int x = pixel.x(), y = pixel.y();
-			if (x >= z_buffer->width() || x < 0) {
+			if (x >= static_cast<int>(z_buffer->width()) || x < 0) {
 				continue;
 			}
-			if (y >= z_buffer->height() || y < 0) {
+			if (y >= static_cast<int>(z_buffer->height()) || y < 0) {
 				continue;
 			}			
 			(*z_buffer)(x, y).push_depth(pixel[0]);

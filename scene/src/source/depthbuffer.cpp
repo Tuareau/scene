@@ -29,28 +29,33 @@ namespace tua {
 
 	size_t DepthBuffer::height() const { return _size.height; }
 
-	void DepthBuffer::clear_figure(Figure::FigureType type) {
-		const auto idx = to_index(type);
-		auto & bounds = _active_bounds[idx];
+	void DepthBuffer::clear_figure(MovableFigure & figure) {
+		const auto idx = to_index(figure.type());
+		const auto & bounds = _active_bounds[idx];
 
 		const auto & [pixel, width, height] = bounds.as_touple();
 		for (size_t x = pixel.x; x < pixel.x + width; ++x) {
 			for (size_t y = pixel.y; y < pixel.y + height; ++y) {
-				_buffer[x][y].erase_depths(type);
+				_buffer[x][y].erase_depths(figure.type());
 			}
 		}
 	}
 
-	void DepthBuffer::draw_figure(const MovableFigure & figure) {
-		const auto transformed_bounds {
-			transform_figure_bounds(figure.bounds())
-		};
+	void DepthBuffer::draw_figure(MovableFigure & figure) {
+		figure.figure()->fill_depth_buffer(this);
+		auto transformed_bounds = transform_figure_bounds(figure.bounds());
 		const auto index = to_index(figure.type());
+		if (_active_bounds[index].is_set()) {
+			auto composed_bounds = _active_bounds[index].compose(transformed_bounds);			
+			draw_bounds(composed_bounds);
+		}
+		else {
+			draw_bounds(transformed_bounds);
+		}
 		_active_bounds[index] = transformed_bounds;
-		draw_bound(transformed_bounds);
 	}
 
-	void DepthBuffer::draw_bound(const Bounds & bound) const {
+	void DepthBuffer::draw_bounds(const Bounds & bound) const {
 		const auto & [pixel, width, height] = bound.as_touple();
 		for (size_t x = pixel.x; x < pixel.x + width; ++x) {
 			for (size_t y = pixel.y; y < pixel.y + height; ++y) {

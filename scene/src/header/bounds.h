@@ -20,6 +20,11 @@ namespace tua {
 		Vec2 _base;
 		Size _size;
 
+		enum class State { SET, UNSET };
+		State _state;
+
+		static const int BOUND_ERROR = 3;
+
 	public:
 		Bounds();
 		Bounds(const Vec2 & base, size_t width, size_t height);
@@ -28,10 +33,10 @@ namespace tua {
 		Bounds & operator=(const Bounds & other);
 
 		//Bounds fit(size_t width, size_t height) const;
-		//Bounds compose(const Bounds & other);
+		Bounds compose(const Bounds & other);
 		bool empty() const;
 
-		//friend bool are_crossed(const Bounds & b1, const Bounds & b2);
+		bool is_set() const;
 
 		std::tuple<Vec2, size_t, size_t> as_touple() const;
 

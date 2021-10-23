@@ -104,19 +104,19 @@ tua::KeyboardListener::ProcessStatus tua::KeyboardListener::process_actions(Figu
 			process_status = ProcessStatus::ACTION_DONE;
 		}
 
-		if (GetKeyState('B') & 0x8000) {
+		if (GetKeyState('N') & 0x8000) {
 			figure->spin(Axes::X, -params.angle_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}
-		if (GetKeyState('N') & 0x8000) {
+		if (GetKeyState('M') & 0x8000) {
 			figure->spin(Axes::X, params.angle_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}
-		if (GetKeyState('M') & 0x8000) {
+		if (GetKeyState('7') & 0x8000) {
 			figure->spin(Axes::Y, -params.angle_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}
-		if (GetKeyState('P') & 0x8000) {
+		if (GetKeyState('8') & 0x8000) {
 			figure->spin(Axes::Y, params.angle_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}
@@ -129,11 +129,11 @@ tua::KeyboardListener::ProcessStatus tua::KeyboardListener::process_actions(Figu
 			process_status = ProcessStatus::ACTION_DONE;
 		}
 
-		if (GetKeyState('O') & 0x8000) {
+		if (GetKeyState('U') & 0x8000) {
 			figure->scale(1.0 - params.scale_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}
-		if (GetKeyState('U') & 0x8000) {
+		if (GetKeyState('O') & 0x8000) {
 			figure->scale(1.0 + params.scale_step);
 			process_status = ProcessStatus::ACTION_DONE;
 		}

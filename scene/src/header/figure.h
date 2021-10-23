@@ -39,7 +39,6 @@ namespace tua {
 		Bounds bounds() const;
 		Color color() const;
 		void fill_depth_buffer(DepthBuffer * z_buffer);
-		void clear_depth_buffer(DepthBuffer * z_buffer);
 
 		static const size_t FIGURES = 2;
 		enum class FigureType { PARALLELEPIPED, TRIANGULAR_PYRAMID, NONE };

@@ -40,7 +40,7 @@ namespace tua {
 		void fill_edges(DepthBuffer * z_buffer, Color color = Color::WHITE);
 
 	public:
-		Polygon();
+		Polygon() = delete;
 		Polygon(const std::vector<Point> & points, Figure::FigureType type, Color color);
 		Polygon(const Polygon & other);
 		Polygon(Polygon && other) noexcept;
@@ -57,7 +57,6 @@ namespace tua {
 		const std::vector<Point> & points() const;
 
 		void fill_depth_buffer(DepthBuffer * z_buffer);
-		void clear_depth_buffer(DepthBuffer * z_buffer);
 	};
 
 	template<typename... Points>

@@ -56,7 +56,7 @@ namespace tua {
 				case Figure::FigureType::TRIANGULAR_PYRAMID:
 					cout << indent << "\nTRIANGULAR PYRAMID\n";
 					cout << indent << "Move: I, J, K, L, 9, 0\n";
-					cout << indent << "Rotate: (B, N), (M, P), (Y, H)\n";
+					cout << indent << "Rotate: (N, M), (7, 8), (Y, H)\n";
 					cout << indent << "Scale: U, O\n";
 					break;
 				default:
@@ -71,9 +71,7 @@ namespace tua {
 		for (auto & figure : _figures) {
 			if (figure.exist()) {
 				if (figure.state() == MovableFigure::MoveState::MOVED) {
-					_buffer->clear_figure(figure.type());
-					_buffer->draw_bound(figure.bounds());
-					figure.figure()->fill_depth_buffer(_buffer);
+					_buffer->clear_figure(figure);
 					_buffer->draw_figure(figure);
 					figure.reset_state();
 				}
@@ -84,16 +82,18 @@ namespace tua {
 	void Scene::run() {
 		show_instruction();
 		for (auto & figure : _figures) {
-			figure.change_state(MovableFigure::MoveState::MOVED);
+			if (figure.exist()) {
+				_buffer->draw_figure(figure);
+			}
 		}
-		while (true) {
-			update_buffer();
+		while (true) {			
 			for (auto & figure : _figures) {
 				auto process_status = process_figure_movement(figure);
 				if (process_status == KeyboardListener::ProcessStatus::QUIT) {
 					return;
 				}
 			}
+			update_buffer();
 		}
 	}
 
