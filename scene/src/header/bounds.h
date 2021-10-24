@@ -4,6 +4,7 @@
 #define _BOUNDS_H_
 
 #include <tuple>
+#include <vector>
 
 #include "size.h"
 
@@ -23,7 +24,7 @@ namespace tua {
 		enum class State { SET, UNSET };
 		State _state;
 
-		static const int BOUND_ERROR = 3;
+		/*static const int BOUND_ERROR = 5;*/
 
 	public:
 		Bounds();
@@ -34,6 +35,7 @@ namespace tua {
 
 		//Bounds fit(size_t width, size_t height) const;
 		Bounds compose(const Bounds & other);
+		std::vector<Bounds> split(size_t count) const;
 		bool empty() const;
 
 		bool is_set() const;

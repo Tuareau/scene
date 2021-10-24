@@ -45,12 +45,21 @@ namespace tua {
 		figure.figure()->fill_depth_buffer(this);
 		auto transformed_bounds = transform_figure_bounds(figure.bounds());
 		const auto index = to_index(figure.type());
+
+		std::vector<std::thread> drawing_threads;
 		if (_active_bounds[index].is_set()) {
-			auto composed_bounds = _active_bounds[index].compose(transformed_bounds);			
-			draw_bounds(composed_bounds);
+			auto composed_bounds = _active_bounds[index].compose(transformed_bounds);	
+			auto split_bounds_vec = composed_bounds.split(_threads_count);
+			for (const auto & bounds : split_bounds_vec) {
+				drawing_threads.push_back(std::thread(&DepthBuffer::draw_bounds, this, bounds));
+			}
 		}
 		else {
 			draw_bounds(transformed_bounds);
+		}
+
+		for (auto & thread : drawing_threads) {
+			thread.join();
 		}
 		_active_bounds[index] = transformed_bounds;
 	}

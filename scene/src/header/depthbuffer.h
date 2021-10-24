@@ -8,6 +8,7 @@
 #include <exception>
 #include <array>
 #include <tuple>
+#include <thread>
 
 #include <iostream>
 
@@ -31,6 +32,8 @@ namespace tua {
 		array<Bounds, Figure::FIGURES> _active_bounds;
 		Size _size;
 		Color _base_color;
+
+		size_t _threads_count = std::thread::hardware_concurrency();
 
 		void draw_bounds(const Bounds & bound) const;
 		Bounds transform_figure_bounds(const Bounds & bound);

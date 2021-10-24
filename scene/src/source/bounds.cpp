@@ -7,8 +7,8 @@ tua::Bounds::Bounds() {
 }
 
 tua::Bounds::Bounds(const Vec2 & base, size_t width, size_t height) {
-	_base = { base.x - BOUND_ERROR, base.y - BOUND_ERROR };
-	_size = { width + BOUND_ERROR, height + BOUND_ERROR };
+	_base = { base.x, base.y };
+	_size = { width, height };
 	_state = State::SET;
 }
 
@@ -58,4 +58,18 @@ tua::Bounds tua::Bounds::compose(const Bounds & other) {
 
 	Vec2 base = { base_x, base_y };
 	return Bounds(base, width, height);
+}
+
+std::vector<tua::Bounds> tua::Bounds::split(size_t count) const {
+	const auto [point, width, height] = this->as_touple();
+	const auto height_step = height / count;
+	auto base_x = point.x;
+	auto base_y = point.y;
+
+	std::vector<Bounds> split_bounds;
+	for (size_t i = 0; i < count; ++i) {
+		Vec2 pt = { base_x, static_cast<int>(base_y + height_step * i) };
+		split_bounds.emplace_back(pt, width, height_step);
+	}
+	return split_bounds;
 }
