@@ -51,6 +51,12 @@ namespace tua {
 		}
 	}
 
+	void Figure::rotate_axes(Axes axis, double angle) {
+		for (auto & pol : _polygons) {
+			pol.spin(axis, angle, Point(0.0, 0.0, 0.0));
+		}	
+	}
+
 	Bounds Figure::bounds() const {		
 		using std::round;
 		const auto & pts0 = _polygons[0].points();
@@ -67,8 +73,8 @@ namespace tua {
 				if (y_max < pt.y()) y_max = pt.y();
 			}
 		}
-		auto width = static_cast<int>(round(x_max - x_min));
-		auto height = static_cast<int>(round(y_max - y_min));
+		auto width = static_cast<int>(round(x_max) - round(x_min));
+		auto height = static_cast<int>(round(y_max) - round(y_min));
 		Vec2 base = { 
 			static_cast<int>(round(x_min)), 
 			static_cast<int>(round(y_min)),

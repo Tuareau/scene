@@ -35,13 +35,14 @@ namespace tua {
 		void displace(Sides side, double step);
 		void scale(double coef);
 		void spin(Axes axis, double angle);
+		void rotate_axes(Axes axis, double angle);
 
 		Bounds bounds() const;
 		Color color() const;
 		void fill_depth_buffer(DepthBuffer * z_buffer);
 
-		static const size_t FIGURES = 2;
-		enum class FigureType { PARALLELEPIPED, TRIANGULAR_PYRAMID, NONE };
+		static const size_t FIGURES = 3;
+		enum class FigureType { PARALLELEPIPED, TRIANGULAR_PYRAMID, GROUND, NONE };
 		virtual FigureType type() const = 0;
 	};
 

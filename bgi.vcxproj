@@ -22,6 +22,7 @@
     <ClInclude Include="scene\src\header\color.h" />
     <ClInclude Include="scene\src\header\depthbuffer.h" />
     <ClInclude Include="scene\src\header\figure.h" />
+    <ClInclude Include="scene\src\header\ground.h" />
     <ClInclude Include="scene\src\header\keyboardlistener.h" />
     <ClInclude Include="scene\src\header\matrix.h" />
     <ClInclude Include="scene\src\header\parallelepiped.h" />
@@ -49,6 +50,7 @@
     <ClCompile Include="scene\src\source\bounds.cpp" />
     <ClCompile Include="scene\src\source\depthbuffer.cpp" />
     <ClCompile Include="scene\src\source\figure.cpp" />
+    <ClCompile Include="scene\src\source\ground.cpp" />
     <ClCompile Include="scene\src\source\keyboardlistener.cpp" />
     <ClCompile Include="scene\src\source\matrix.cpp" />
     <ClCompile Include="scene\src\source\parallelepiped.cpp" />

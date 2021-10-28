@@ -3,6 +3,8 @@
 #include "triangularpyramid.h"
 #include "scene.h"
 #include "color.h"
+#include "axes.h"
+#include "ground.h"
 
 int main(int argc, char* argv[])
 {
@@ -10,15 +12,19 @@ int main(int argc, char* argv[])
 	using tua::Parallelepiped;
 	using tua::TriangularPyramid;
 	using tua::Scene;
+	using tua::Axes;
 
-	Point base0(100, 100, 100);
+	Point base0(100, 100, 0);
 	Parallelepiped * par = new Parallelepiped(base0, 60, 30, 30, Color::CYAN);
-	Point base1(100, 100, 100);
+	Point base1(100, 100, 0);
 	TriangularPyramid * pyr = new TriangularPyramid(base1, 60, Color::MAGENTA);
 
 	Scene scene("SCENE");
 	scene.add_figure(par);
 	scene.add_figure(pyr);
+	scene.turn_light_on();
+	scene.rotate_axes(Axes::X, 45);
+	scene.rotate_axes(Axes::Y, 45);
 	scene.run();
 
 	delete par;

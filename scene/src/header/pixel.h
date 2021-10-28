@@ -14,7 +14,7 @@ namespace tua {
 
 	struct Depth {
 		int z;
-		typename Figure::FigureType object_type;
+		Figure::FigureType object_type;
 		Color color;
 	};
 

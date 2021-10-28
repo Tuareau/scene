@@ -45,13 +45,13 @@ namespace tua {
 	Matrix * make_rotate_y_transform(const Point & base, double angle);
 	Matrix * make_rotate_z_transform(const Point & base, double angle);
 
-	// Matrix * make_coordinates_x_transform(double angle);
-	Matrix * make_coordinates_y_transform(double angle);
-	// Matrix * make_coordinates_z_transform(double angle);
+	//Matrix * make_coordinates_x_transform(double angle);
+	//Matrix * make_coordinates_y_transform(double angle);
+	//Matrix * make_coordinates_z_transform(double angle);
 
-	// Matrix * make_coordinates_x_reverse_transform(double angle);
-	Matrix * make_coordinates_y_reverse_transform(double angle);
-	// Matrix * make_coordinates_z_reverse_transform(double angle);
+	//Matrix * make_coordinates_x_reverse_transform(double angle);
+	//Matrix * make_coordinates_y_reverse_transform(double angle);
+	//Matrix * make_coordinates_z_reverse_transform(double angle);
 }
 
 #endif

@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "ground.h"
 
 namespace tua {
 
@@ -37,6 +38,7 @@ namespace tua {
 
 	Scene::~Scene() {
 		delete _buffer;
+		this->remove_figure(Figure::FigureType::GROUND);
 		closegraph(ALL_WINDOWS);
 	}
 
@@ -106,6 +108,17 @@ namespace tua {
 			}
 		}
 		return process_status;
+	}
+
+	void Scene::rotate_axes(Axes axis, double angle) {
+		for (auto & figure : _figures) {
+			figure.figure()->rotate_axes(axis, angle);
+		}
+	}
+
+	void Scene::turn_light_on() {
+		Figure * ground = new Ground(100, 960, 540, Color::DARKGRAY);
+		this->add_figure(ground);
 	}
 
 }

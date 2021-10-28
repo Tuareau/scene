@@ -3,9 +3,6 @@
 
 namespace tua {
 
-	Parallelepiped::Parallelepiped(std::vector<Polygon> & polygons, Color color)
-		: Figure(polygons, color) {}
-
 	Parallelepiped::Parallelepiped(Point base, size_t width, size_t height, size_t depth, Color color)
 		: Figure(color) {
 		Point pt0(base);

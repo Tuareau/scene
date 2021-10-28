@@ -13,7 +13,6 @@ namespace tua {
 	{
 	public:
 		Parallelepiped() = default;
-		Parallelepiped(std::vector<Polygon> & polygons, Color color);
 		Parallelepiped(Point base, size_t width, size_t height, size_t depth, Color color);
 		~Parallelepiped() = default;
 

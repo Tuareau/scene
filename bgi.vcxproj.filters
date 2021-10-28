@@ -78,6 +78,9 @@
     <ClInclude Include="scene\src\header\color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scene\src\header\ground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\src\source\bgi.cxx">
@@ -147,6 +150,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scene\src\source\bounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\src\source\ground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

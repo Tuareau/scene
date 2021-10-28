@@ -32,7 +32,7 @@ namespace tua {
 	private:
 		using FiguresArray = std::array<MovableFigure, Figure::FIGURES>;
 		FiguresArray _figures;
-		MovementParameters _parameters;
+		MovementParameters _parameters;	
 
 		DepthBuffer * _buffer;
 		KeyboardListener _keyboard_listener;
@@ -40,7 +40,7 @@ namespace tua {
 		void update_buffer();
 		KeyboardListener::ProcessStatus process_figure_movement(MovableFigure & figure);
 
-		void show_instruction() const;
+		void show_instruction() const;	
 
 	public:
 		Scene(const std::string & title, size_t width = 960, size_t height = 540);
@@ -49,7 +49,10 @@ namespace tua {
 
 		void add_figure(Figure * figure);
 		void remove_figure(Figure::FigureType type);
-		//void rotate_axes();
+
+		void rotate_axes(Axes axis, double angle);
+
+		void turn_light_on();
 
 		void run();
 	};

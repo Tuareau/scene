@@ -3,9 +3,6 @@
 
 namespace tua {
 
-	TriangularPyramid::TriangularPyramid(std::vector<Polygon> & polygons, Color color)
-		: Figure(polygons, color) {}
-
 	TriangularPyramid::TriangularPyramid(Point base, size_t length, Color color) 
 		: Figure(color) {
 		const auto half_length = length / 2;

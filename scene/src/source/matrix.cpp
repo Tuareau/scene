@@ -41,7 +41,7 @@ namespace tua {
 				}
 			}
 		}
-		_points = result._points;
+		_points = std::move(result._points);
 	}
 
 	Matrix & Matrix::operator=(const Matrix & other) {
@@ -119,7 +119,7 @@ namespace tua {
 			Point(cos_value, 0.0, -sin_value, 0.0),
 			Point(      0.0, 1.0,        0.0, 0.0),
 			Point(sin_value, 0.0,  cos_value, 0.0),
-			Point(   base_x, 0.0,     base_z, 1.0)
+			Point(   base_x, 0.0,     base_z, 1.0),
 		};
 		return new Matrix(rotate_points);
 	}
@@ -132,7 +132,7 @@ namespace tua {
 			Point( cos_value, sin_value, 0.0, 0.0),
 			Point(-sin_value, cos_value, 0.0, 0.0),
 			Point(       0.0,       0.0, 1.0, 0.0),
-			Point(    base_x,    base_y, 0.0, 1.0)
+			Point(    base_x,    base_y, 0.0, 1.0),
 		};
 		return new Matrix(rotate_points);
 	}
@@ -180,6 +180,30 @@ namespace tua {
 			Point(       0.0, 0.0,       0.0, 1.0),
 		};
 		return new Matrix(coordinates_points);
+	}
+
+	Matrix * make_coordinates_x_transform(double angle) {
+		double rad = 3.14 / 180.0 * angle;
+		auto cos_value = std::cos(rad), sin_value = std::sin(rad);
+		std::vector<Point> rotate_points{
+			Point(1.0,        0.0,       0.0, 0.0),
+			Point(0.0,  cos_value, sin_value, 0.0),
+			Point(0.0, -sin_value, cos_value, 0.0),
+			Point(0.0,        0.0,       0.0, 1.0),
+		};
+		return new Matrix(rotate_points);
+	}
+
+	Matrix * make_coordinates_z_transform(double angle) {
+		double rad = 3.14 / 180.0 * angle;
+		auto cos_value = std::cos(rad), sin_value = std::sin(rad);
+		std::vector<Point> rotate_points {
+		Point( cos_value, sin_value, 0.0, 0.0),
+		Point(-sin_value, cos_value, 0.0, 0.0),
+		Point(       0.0,       0.0, 1.0, 0.0),
+		Point(       0.0,       0.0, 0.0, 1.0),
+		};
+		return new Matrix(rotate_points);
 	}
 
 }
